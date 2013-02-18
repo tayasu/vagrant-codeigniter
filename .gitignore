@@ -1,5 +1,13 @@
-*/config/development
+### General
+.DS_Store
+
+
+### Codeginter
 */logs/log-*.php
 */logs/!index.html
 */cache/*
 */cache/!index.html
+
+
+### Vagrant
+.vagrant

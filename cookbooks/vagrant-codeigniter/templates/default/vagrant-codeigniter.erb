@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+    ServerName vagrant-codeigniter.local
+
+    ErrorLog /var/log/httpd/vagrant-codeigniter-error_log
+    CustomLog /var/log/httpd/vagrant-codeigniter-access_log combined
+
+    php_value error_log /var/log/httpd/vagrant-codeigniter-error_log
+    php_value date.timezone "Asia/Tokyo"
+
+    DocumentRoot /vagrant/codeigniter
+
+    <Directory /vagrant/codeigniter>
+        Options FollowSymLinks
+        DirectoryIndex index.html index.htm index.php
+        AllowOverride All
+        Order Deny,Allow
+        Allow from all
+        EnableMMAP Off
+        EnableSendfile Off
+    </Directory>
+
+    ## CodeIgniter enviornment name
+    setEnv CI_ENV vagrant
+</VirtualHost>
