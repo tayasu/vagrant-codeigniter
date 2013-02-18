@@ -4,7 +4,7 @@ VagrantとCodeIgniter
 Vagrant環境の作成
 ------------------
 
-### VirtualBoxをインストールする ###
+### VirtualBoxをインストール ###
 
 Virtualboxのサイトからインストーラをダウンロードしてインストールする。  
 <https://www.virtualbox.org>
