@@ -2,7 +2,7 @@ name "vagrant-codeigniter"
 description "vagrant-codeigniter roles"
 run_list(
   "selinux::disabled",
-  "yum::epel",
+  "yum::remi",
   "ntp",
   "postfix",
   "vagrant-codeigniter::db",

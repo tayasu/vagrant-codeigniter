@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant::Config.run do |config|
-  config.vm.box = 'centos55'
+  config.vm.box = 'rw_centos_57'
   config.vm.box_url = 'https://dl.dropbox.com/u/148070/CentOS-5.5-x86_64.box'
   config.vm.network :hostonly, '33.33.33.99'
   config.vm.provision :chef_solo do |chef|
@@ -10,9 +10,15 @@ Vagrant::Config.run do |config|
     chef.roles_path = "roles"
     chef.add_role "vagrant-codeigniter"
     chef.json.merge!({
+        :mysql55 => {
+          :version => '5.5.33-1.el5.remi',
+        },
         :mysql => {
-          :database_name => 'vc',
+          :database_name => 'codeigniter',
           :server_root_password => ''
+        },
+        :apache => {
+          :package => 'httpd',
         },
         :languages => {
           :perl => {

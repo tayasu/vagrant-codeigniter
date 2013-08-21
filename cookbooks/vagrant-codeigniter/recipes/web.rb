@@ -1,19 +1,11 @@
-include_recipe "apache2"
-include_recipe "apache2::mod_php5"
-
-apache_module "rewrite"
+include_recipe "apache"
 
 template "vagrant-codeigniter" do
-  path "#{node[:apache][:dir]}/sites-available/vagrant-codeigniter"
+  path "/etc/httpd/conf.d/vagrant-codeigniter.local.conf"
   source "vagrant-codeigniter.erb"
   owner "apache"
   group "apache"
   mode "0644"
-end
-
-execute "site-enabled" do
-  command "a2ensite vagrant-codeigniter"
-  notifies :restart, resources(:service => "apache2")
 end
 
 directory "/var/log/vagrant-codeigniter" do
