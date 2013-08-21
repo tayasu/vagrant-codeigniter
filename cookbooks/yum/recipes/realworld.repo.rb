@@ -1,6 +1,5 @@
 #
-# Cookbook Name:: yum
-# Recipe:: yum 
+# Recipe:: 
 #
 # Copyright 2011, Eric G. Wolfe
 # Copyright 2011, Opscode, Inc.
@@ -18,6 +17,7 @@
 # limitations under the License.
 #
 
-template "/etc/yum.conf" do
-  source "yum-rhel#{node['platform_version'].to_i}.conf.erb"
+template "/etc/yum.repos.d/centos-5.5-x86_64-realworld.repo" do
+  source "centos-5.5-x86_64-realworld.repo.erb"
 end
+

@@ -1,10 +1,10 @@
-# CHANGELOG for postfix
+# CHANGELOG for php53
 
-This file is used to list changes made in each version of postfix.
+This file is used to list changes made in each version of php53.
 
 ## 0.1.0:
 
-* Initial release of postfix
+* Initial release of php53
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

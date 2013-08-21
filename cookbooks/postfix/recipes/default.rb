@@ -1,37 +1,64 @@
 #
-# Author:: Joshua Timberman(<joshua@opscode.com>)
 # Cookbook Name:: postfix
 # Recipe:: default
 #
-# Copyright 2009, Opscode, Inc.
+# Copyright 2013, YOUR_COMPANY_NAME
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# All rights reserved - Do Not Redistribute
 #
 
-package "postfix" do
-  action :install
+%w{postfix}.each do |pkg|
+  package pkg do
+    action :install
+  end
 end
 
-service "postfix" do
-  action :enable
-end
-
-%w{main master}.each do |cfg|
-  template "/etc/postfix/#{cfg}.cf" do
-    source "#{cfg}.cf.erb"
+template "/etc/postfix/main.cf" do
+    source "main.cf.erb"
     owner "root"
     group "root"
     mode 0644
-    notifies :restart, resources(:service => "postfix")
-  end
 end
+
+template "/etc/postfix/virtual" do                                                         
+    source "virtual.erb"                                                                   
+    owner "root"
+    group "root"
+    mode 0644
+end
+
+template "/etc/postfix/virtual_alias" do
+    source "virtual_alias.erb"     
+    owner "root"
+    group "root"
+    mode 0644
+end
+
+group "vmail" do 
+  action :create
+end
+
+user "vmail" do
+  shell "/sbin/nologin"
+  home "/home/vmail"
+  password nil
+  gid "vmail"
+  supports :manage_home => true
+  action :create
+end
+
+service "sendmail" do
+  supports :status => false, :restart => false, :reload => false
+  action [ :disable, :stop ]
+end
+
+service "postfix" do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
+end
+
+execute "mta setting" do
+  command "alternatives --set mta /usr/sbin/sendmail.postfix"
+end
+
+
