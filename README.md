@@ -50,3 +50,25 @@ hostsファイルにvagrant環境のIPとサイト名を記載する。
 phpMyAdminがインストール済みです。
 下記のURLからアクセスできます。  
 <http://vagrant-codeigniter.local/phpmyadmin/>
+
+開発メモ
+------------------
+
+### VirtualBoxのLinuxへのログイン方法 ###
+
+ルートディレクトリにて、下記コマンドを実行する。
+
+    vagrant ssh
+
+### ログの確認方法 ###
+
+開発中にエラーが発生した場合や、CodeIgniterのlog_messageでログ出力した場合は、VirtualBoxのLinuxへログイン後、下記コマンドで確認ができる。
+
+    #Apacheのアクセスログ
+    sudo vi /var/log/httpd/vagrant-codeigniter-access_log
+    
+    #Apacheのエラーログ
+    sudo vi /var/log/httpd/vagrant-codeigniter-access_log
+    
+    #CodeIgniterのログ（日ごとに作成される）
+    sudo vi /var/log/vagrant-codeigniter/log-YYYY-MM-DD.php
