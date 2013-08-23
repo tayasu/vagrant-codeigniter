@@ -68,7 +68,7 @@ phpMyAdminがインストール済みです。
     sudo vi /var/log/httpd/vagrant-codeigniter-access_log
     
     #Apacheのエラーログ
-    sudo vi /var/log/httpd/vagrant-codeigniter-access_log
+    sudo vi /var/log/httpd/vagrant-codeigniter-error_log
     
     #CodeIgniterのログ（日ごとに作成される）
     sudo vi /var/log/vagrant-codeigniter/log-YYYY-MM-DD.php
