@@ -10,7 +10,6 @@
 %w{mysql-server mysql-devel}.each do |pkg|
   package pkg do
     action :install
-    version node['mysql55']['version']
   end
 end
 
