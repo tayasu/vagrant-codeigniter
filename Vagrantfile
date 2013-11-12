@@ -3,7 +3,7 @@
 
 Vagrant::Config.run do |config|
   config.vm.box = 'rw_centos_57'
-  config.vm.box_url = 'https://dl.dropboxusercontent.com/u/148070/CentOS-5.7-i386.box'
+  config.vm.box_url = 'http://hglab.realworld.jp/boxes/CentOS-5.7-i386.box'
   config.vm.network :hostonly, '33.33.33.99'
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = 'cookbooks'
