@@ -1,0 +1,1 @@
+<a href="room/logout">Logout</a>
