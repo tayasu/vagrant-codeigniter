@@ -7,10 +7,10 @@ class DBFunctions extends CI_Model {
         parent::__construct();
     }
 		
-	public function authenticate($username,$password){
-		$this -> db -> select('userID, username, password');
-		$this -> db -> from('authenticate');
-		$this -> db -> where('username', $username);
+	public function authenticate($email,$password){
+		$this -> db -> select('userID, username,email, password');
+		$this -> db -> from('users');
+		$this -> db -> where('email', $email);
 		$this -> db -> where('password', $password);
 		$this -> db -> limit(1);
 
@@ -24,5 +24,18 @@ class DBFunctions extends CI_Model {
 		}
 	}
 	
+	public function register($username,$email,$password){
+		$this->db->set('username',$username);
+		$this->db->set('email',$email);
+		$this->db->set('password',$password);
+		
+		$this->db->insert('users');
+
+		if($this->db->affected_rows() == 1){
+			return $this->db->affected_rows();
+		}else{
+			return false;
+		}	
+	}
 }
 ?>

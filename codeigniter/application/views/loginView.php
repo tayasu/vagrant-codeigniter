@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to Twitter</title>
+	<title>Welcome to Twitter::Login</title>
 
 	<style type="text/css">
 body{
@@ -44,7 +44,7 @@ body{
 	border:1px #E5E5E5 solid;
 }
 
-#usernameID{
+#emailID{
 	position:absolute;
 	top: 40px;
 	border:2px #B40313 solid;
@@ -53,7 +53,7 @@ body{
 	padding:5px 5px 5px 5px;
 }
 
-#labelUserID{
+#labelEmailID{
 	position:absolute;
 	top: 6px;
 	width:36px;
@@ -189,6 +189,12 @@ $this->load->helper('form');
 
 //echo any type of errors
 echo validation_errors();
+
+//echo the message of successful registration, whenever done
+if(isset($message)){
+	echo($message);
+}
+
 ?>
 </div>
 
@@ -196,13 +202,13 @@ echo validation_errors();
 <?php
 
 //open the form tab and set action to validate function of the login class
-echo form_open('verifyLogin',array('name' => 'loginForm')); 
+echo form_open('login/verifyLogin',array('name' => 'loginForm')); 
 
-//set the label for the usename
-echo form_label('Username', 'usernameID',  array( 'id' => 'labelUserID'));
+//set the label for the email
+echo form_label('Email', 'emailID',  array( 'id' => 'labelEmailID'));
 
 //text input type for usename
-echo form_input(array('name'        => 'username','id'          => 'usernameID'));
+echo form_input(array('name'        => 'email','id'          => 'emailID'));
 
 //set the label for the password
 echo form_label('Password', 'passwordID',  array( 'id' => 'labelPassID'));
@@ -214,7 +220,7 @@ echo form_password(array('name'        => 'password','id'          => 'passwordI
 echo form_close();
 ?>
 <div id="loginbuttonID"><a href="javascript:loginform()">Login</a></div>
-<div id="registerbuttonID"><a href="javascript:registerform()">Register</a></div>
+<div id="registerbuttonID"><a href="register">Register</a></div>
 <div id="forgotpassID"><a href="recover_pass.php">forgot password?</a></div>
 </div>
 <div id="instructionID">

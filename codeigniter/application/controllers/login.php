@@ -2,8 +2,56 @@
 
 class Login extends CI_Controller {
 
-	public function index()
-	{
-		$this->load->view('loginForm');
+	public function index(){
+		if($this->session->userdata('logged_in')){
+			$session_data = $this->session->userdata('logged_in');
+			$data['username'] = $session_data['username'];
+			$this->load->view('roomView', $data);
+		}
+		else{
+			//If no session, redirect to login page
+			$this->load->view('loginView');
+		}
+	}
+	
+	public function verifyLogin(){
+		$this->load->helper('form');
+		
+		$this->load->library('form_validation','url');
+		
+		$this->form_validation->set_rules('username', 'Username', 'trim|xss_clean');
+		$this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|callback_check_database');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('loginView');       //if validation fails load the loginForm
+		}
+		else                                       
+		{                                         //if validation passes go to private area
+			redirect('room','refresh');
+		}	
+	}
+	
+	public function check_database($raw_password){
+		$email = htmlspecialchars($_POST['email']);
+		$password = sha1(htmlspecialchars($raw_password));	
+		
+		$this->load->model('DBFunctions');
+			
+		$result=$this->DBFunctions->authenticate($email,$password); //the authenticate function is in model:DBFunctions
+			
+		if($result){
+			$sess_array = array();
+				
+			foreach($result as $row){
+				$sess_array = array('userID' => $row->userID,'username' => $row->username);
+				$this->session->set_userdata('logged_in', $sess_array);
+			}
+			return true;
+		}
+		else{
+			$this->form_validation->set_message('check_database', 'Invalid username or password!!');
+			return false;
+		}
 	}
 }
