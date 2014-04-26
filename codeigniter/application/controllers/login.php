@@ -4,13 +4,12 @@ class Login extends CI_Controller {
 
 	public function index(){
 		if($this->session->userdata('logged_in')){
-			$session_data = $this->session->userdata('logged_in');
-			$data['username'] = $session_data['username'];
-			$this->load->view('roomView', $data);
+			redirect('room','refresh');
 		}
 		else{
 			//If no session, redirect to login page
-			$this->load->view('loginView');
+			$data['message'] = "NOT_SET";
+			$this->load->view('loginView',$data);
 		}
 	}
 	
@@ -24,7 +23,8 @@ class Login extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('loginView');       //if validation fails load the loginForm
+			$data['message'] = "LOGIN_FAILED";
+			$this->load->view('loginView',$data);       //if validation fails load the loginForm
 		}
 		else                                       
 		{                                         //if validation passes go to private area
@@ -50,7 +50,6 @@ class Login extends CI_Controller {
 			return true;
 		}
 		else{
-			$this->form_validation->set_message('check_database', 'Invalid username or password!!');
 			return false;
 		}
 	}
