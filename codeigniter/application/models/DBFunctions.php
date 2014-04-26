@@ -39,28 +39,26 @@ class DBFunctions extends CI_Model {
 	}
 	
 	public function posts($page){
-		$length = 3;
-		$num_of_rows = $this->db->get('posts')->num_rows();
-	
-		if($length * $page <= $num_of_rows){
-			$this->db->select('username,posts,time_of_post');
-			$this->db->from('posts');
-			$this->db->order_by('time_of_post');
-			$this->db->limit($length,$length*($page - 1));	
+		$this->db->select('username,posts,time_of_post');
+		$this->db->from('posts');
+		$this->db->order_by('time_of_post');
+		$this->db->limit(LENGTH,LENGTH*($page - 1));	
 		
-			$query = $this->db->get();
+		$query = $this->db->get();
 		
-			if($query->num_rows()>0){
-				return $query->result_array();
+		if($query->num_rows()>=0){
+			if($query->num_rows<LENGTH){
+				$data = $query->result_array();
+				$data['message'] = "MAX_VIEW_REACHED";
 			}
 			else{
-				return false;
+				$data = $query->result_array();
 			}
+			
+			return $data;
 		}
 		else{
-			$data = $this->db->get('posts')->result_array();
-			$data['message'] = "VIEW_MAX_POST_REACHED";
-			return $data;
+			return false;
 		}
 	}
 }

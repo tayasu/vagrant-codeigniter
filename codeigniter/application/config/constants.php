@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 define('CSS','css/');
+define('LENGTH',4);
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

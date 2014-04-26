@@ -50,10 +50,8 @@ class Room extends CI_Controller {
 			
 		}
 		else{
-			
 			return false;
-			
-			//redirect('room','refresh');                //handling uri entered by the user
+			redirect('room','refresh');                //handling uri entered by the user
 		}		
 	} 
 	
@@ -66,7 +64,7 @@ class Room extends CI_Controller {
 			print_r($result);
 		}
 		else{
-			echo("NO");
+			echo("NO!");
 		}
 	}
 	

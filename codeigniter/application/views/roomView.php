@@ -68,7 +68,35 @@ function ajaxPegination(str) {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 		var rawData = xmlhttp.responseText;
 		var data = getData(rawData);
-		document.getElementById("statusByAjaxID").innerHTML=rawData;
+		
+		var numberOfPosts = rawData.split("Array").length-2;
+		var page = parseInt(data[0][2]) + 1;
+		var message = data[numberOfPosts + 1][0];
+		
+		document.getElementById("see_moreID").href = "javascript:ajaxPegination(" + page + ")";
+		
+		document.getElementById("msgID").innerHTML = message;
+		
+		if(message == "MAX_VIEW_REACHED"){
+			document.getElementById("see_moreID").href = "<?php echo(base_url() . "room/");?>";
+			document.getElementById("see_moreID").innerHTML = "recent only...";
+		}
+		
+		var arrayDiv = new Array();
+
+		var length = <?php echo(LENGTH);?>;
+		var increment = length * (parseInt(data[0][2]) - 2);
+		for(var k = 0; k < numberOfPosts; k++){
+			var dText="<p class='usernameClass'>" + data[k+1][0]+"<h7 class='dateClass'>"+data[k+1][2]+"</h7></p><p>"+data[k+1][1]+"</p>";
+			var br = document.createElement('br');
+			arrayDiv[increment] = document.createElement('div');
+			arrayDiv[increment].id = 'statusDisplayID' + increment;
+			arrayDiv[increment].className = 'statusDisplayClass';
+			statusByAjaxID.appendChild(arrayDiv[increment]);
+			statusByAjaxID.appendChild(br);
+			document.getElementById("statusDisplayID" + increment).innerHTML = dText;
+			increment++;
+		}
 		console.log(data);
     }
   }
@@ -111,10 +139,11 @@ if(isset($message)){
 
 
 <div id="roomBodyID">
-	<br/>
+<br/>
+<div id="statusInputID">
+</div>
 
-	<div id="statusInputID"></div>
-<br>
+<br/>
 <div id="statusByInputID">	</div>	
 <?php 
 for($i = 3; $i < $di1; $i++){
@@ -129,27 +158,18 @@ for($i = 3; $i < $di1; $i++){
 	echo("</div>");
 }
 ?>
-<br>
-<div id="statusByAjaxID">	</div>	
-    
-    <br/>
-    
-    <div id="morePostID">
-	<?php
-	if($message == "NOT_SET"){
-		//echo("<a href='" . base_url() . "room/more/" . ($di2 + 1) . "'>see more..</a>");
-		echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")'>see more..</a>");
-	}
-	else{
-		echo("<a href='" . base_url() . "room/'>recent only..</a>");
-	}
-	?>
-	
-	
-	</div>
 
-	<br style="clear:both" />
-					
+<br/>
+<div id="statusByAjaxID">	
+
+</div>	
+    
+<br/>
+<div id="morePostID">
+<?php echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")' id='see_moreID'>see more..</a>");?>
+</div>
+<br style="clear:both" />
+
 </div>
 
 
