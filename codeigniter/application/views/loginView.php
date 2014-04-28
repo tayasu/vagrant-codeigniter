@@ -20,13 +20,8 @@ function loginform(){
 
 <div id="spacerID"></div>
 
-<div id="msgID" style="display:block">
-<?php
-if(isset($message)){
-	echo($message);
-}
-
-?>
+<div id="msgID" style="display:<?php if($message=="NOT_SET"){echo("none");}else{echo("block");}?>">
+<?php if(isset($message)){echo($message);}?>
 </div>
 
 <div id="spacerID"></div>
@@ -59,7 +54,9 @@ echo form_close();
 <div id="loginregisterbuttonID"><a href="<?php echo(base_url());?>register">Register</a></div>
 <div id="loginforgotpassID"><a href="recover_pass.php">forgot password?</a></div>
 </div>
-<div id="instructionID">
+
+<br/>
+<div id="footerID">
 </div>
 
 </body>

@@ -24,6 +24,22 @@ class DBFunctions extends CI_Model {
 		}
 	}
 	
+	public function userExists($email){
+		$this->db->select('email');
+		$this->db->from('users');
+		$this->db->where('email',$email);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query->num_rows == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	public function register($username,$email,$password){
 		$this->db->set('username',$username);
 		$this->db->set('email',$email);
@@ -38,23 +54,37 @@ class DBFunctions extends CI_Model {
 		}	
 	}
 	
-	public function posts($page){
+	public function post($username,$posts,$date){
+		$this->db->set('username',$username);
+		$this->db->set('posts',$posts);
+		$this->db->set('time_of_post',$date);
+		
+		$this->db->insert('posts');
+		
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public function getPosts($page){
 		$this->db->select('username,posts,time_of_post');
 		$this->db->from('posts');
-		$this->db->order_by('time_of_post');
+		$this->db->order_by('time_of_post','DESC');
 		$this->db->limit(LENGTH,LENGTH*($page - 1));	
 		
 		$query = $this->db->get();
 		
-		if($query->num_rows()>=0){
+		if($query->num_rows()>0){
 			if($query->num_rows<LENGTH){
 				$data = $query->result_array();
 				$data['message'] = "MAX_VIEW_REACHED";
 			}
 			else{
-				$data = $query->result_array();
+				$data = $query->result_array();    //when MAX_VIEW_NOT_REACHED message is not set
 			}
-			
 			return $data;
 		}
 		else{

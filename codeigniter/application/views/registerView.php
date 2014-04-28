@@ -18,11 +18,18 @@ function registerform(){
 
 <div id="spacerID"></div>
 
-<div id="msgID" style="display:block">
+<div id="msgID" style="display:<?php if($message=="NOT_SET"){echo("none");}else{echo("block");}?>">
 <?php
-if(isset($message)){
+//load the form helper class
+$this->load->helper('form');
+
+//set the error delimiters, the default one add <p></p>
+
+if(isset($message)&&$message != "VALIDATION_ERRORS"){
+
 	echo($message);
 }
+echo validation_errors();
 ?>
 </div>
 
@@ -30,9 +37,6 @@ if(isset($message)){
 
 <div id="registerFormID">
 <?php
-//load the form helper class
-$this->load->helper('form');
-
 //open the form tab and set action to validate function of the login class
 echo form_open('register/verifyRegister',array('name' => 'registerForm')); 
 
@@ -61,7 +65,9 @@ echo form_close();
 <div id="registerbuttonID"><a href="javascript:registerform()">Register</a></div>
 <div id="forgotpassID"><a href="recover_pass.php">forgot password?</a></div>
 </div>
-<div id="instructionID">
+
+<br/>
+<div id="footerID">
 </div>
 
 </body>
