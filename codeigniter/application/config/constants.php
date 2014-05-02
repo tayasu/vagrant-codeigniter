@@ -3,9 +3,10 @@
 define('DEFAULT_STATUS',"express yourself");
 define('LENGTH',2);
 define('LOGIN_FAILED',"Username or password is incorrect.");
-define('USER_EXISTS',"This email has already been registered.");
+define('USER_EXISTS'," has already been registered. Please try with new email.");
 define('REGISTRATION_SUCCESSFUL',"You have been registered. Please login.");
 define('REGISTRATION_FAILED',"Registration failed due to some unknown reasons.");
+define('NO_MESSAGE'," ");
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

@@ -159,16 +159,7 @@ function postStatusByAjax(){
 <body>
 
 <div id="roomMenuID">
-<?php 
-if(isset($di0)){
-	echo($di0);
-}
-else{
-	$session_data = $this->session->userdata('logged_in');
-	echo($session_data['username']);
-}
-
-?>
+<?php echo($di0);?>
 <a href="<?php echo(base_url());?>room/logout">Logout</a>
 </div>
 
@@ -195,7 +186,6 @@ else{
 </div>	
 <!--------------------------------------------------DEFAULT STATUS DISPLAY---------------------------------------------------->
 <?php 
-if(isset($di1)){
 for($i = 3; $i < $di1; $i++){
 	echo("<br/><div id='statusDisplayID'>");
 	echo("<p class='usernameClass'>".
@@ -207,10 +197,6 @@ for($i = 3; $i < $di1; $i++){
 	echo("<p>".${'di'.$i}['posts']."</p>");
 	echo("</div>");
 }
-}
-else{
-	echo("No posts entered!");
-}
 ?>
 <!---------------------------------------------------AJAX STATUS DISPLAY------------------------------------------------------->
 <br/>
@@ -220,13 +206,7 @@ else{
 <!------------------------------------------------------BOTTOM LINKS------------------------------------------------------------>    
 <br/>
 <div id="morePostID">
-<?php 
-if　(isset($di2))　{
-	echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")' id='see_moreID'>see more..</a>");
-}else {
-	echo(" ");
-}
-?>
+<?php echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")' id='see_moreID'>see more..</a>");?>
 </div>
 <br style="clear:both" />
 </div>

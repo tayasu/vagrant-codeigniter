@@ -18,18 +18,17 @@ function registerform(){
 
 <div id="spacerID"></div>
 
-<div id="msgID" style="display:<?php if($message=="NOT_SET"){echo("none");}else{echo("block");}?>">
+<div id="msgID" style="display:<?php if($message==" "){echo("none");}else{echo("block");}?>">
 <?php
 //load the form helper class
 $this->load->helper('form');
 
-//set the error delimiters, the default one add <p></p>
-
-if(isset($message)&&$message != "VALIDATION_ERRORS"){
-
+if(isset($message) && $message != "VALIDATION_ERRORS"){
 	echo($message);
 }
-echo validation_errors();
+if(validation_errors()){
+	echo validation_errors();
+}
 ?>
 </div>
 

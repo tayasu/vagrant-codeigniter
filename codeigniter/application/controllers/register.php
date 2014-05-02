@@ -17,30 +17,31 @@ class Register extends CI_Controller {
 	}
 	
 	public function index(){
-		$data['message'] = "NOT_SET";
+		$data['message'] = NO_MESSAGE;
 		$this->load->view('registerView',$data);	
 	}
 	
-	public function verifyRegister(){
+	private function verifyRegister(){
 		$this->load->helper('form');
 		
 		$this->load->library('form_validation','url');
 		
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('email', 'Email', 'trim|xss_clean|required|valid_email');
+		$this->form_validation->set_rules('email', 'Email', 'trim|xss_clean|required|valid_email|callback_userExists');
 		$this->form_validation->set_rules('password', 'Password', 'trim|xss_clean|required');
 			
 		if ($this->form_validation->run() == FALSE){    // if form validation fails, get form errors and set messages, redirect to register
 			$data['message'] = "VALIDATION_ERRORS";
 			$this->load->view('registerView',$data);      //if validation fails load the registrationForm
 		
-		}
-		else{                                           //if form validation passes, get data,check duplicate,do redirects 
-			$username = htmlspecialchars($_POST['username']);
+		} else {                                           //if form validation passes, get data,check duplicate,do redirects 
+		
+			redirect('room','refresh');
+			/*$username = htmlspecialchars($_POST['username']);
 			$email = htmlspecialchars($_POST['email']);
 			$password =sha1(htmlspecialchars($_POST['password']));
 			
-			$this->load->model('DBFunctions');
+			$this->load->model('posts');
 			
 			$isUserExists = $this->DBFunctions->userExists($email);  //check if user exists
 			
@@ -59,7 +60,27 @@ class Register extends CI_Controller {
 					$data['message']=REGISTRATION_FAILED;
 					$this->load->view('registerView',$data);          //if registration failed load the registerForm 	
 				}
-			}	
-		}	
-	}	
+			}*/	
+		}
+	}
+
+	public function userExists($email){
+		$this->load->model('users');
+		if($this->users->userExists($email)){                         //if userExists then validation is false
+			$this->form_validation->set_message('userExists', '<i><u>'.$email.'</u></i>'. USER_EXISTS);
+			return false;
+		}
+		$username = htmlspecialchars($_POST['username']);
+		$password =sha1(htmlspecialchars($_POST['password']));
+		if($this->users->register($username,$email,$password)){
+			$sess_array = array();
+			$sess_array = array('userid' => $singleRowResult['userid'],'username' => $singleRowResult['username']);
+			$this->session->set_userdata('logged_in', $sess_array);
+			return true;
+		}
+		else{
+			$this->form_validation->set_message('userExists' , REGISTRATION_FAILED);
+			return false;
+		}
+	}
 }

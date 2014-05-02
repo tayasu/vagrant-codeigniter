@@ -412,6 +412,18 @@ body{
 	padding-top:0px;
 }
 
+#NoPostID{
+	background:#FFFFFF;
+	width:53.4%;
+	position:relative;
+	left:22%;
+	border:1px #E5E5E5 solid;
+	padding-bottom:0px;
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:0px;
+}
+
 #statusByAjaxID{
 	
 }

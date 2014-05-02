@@ -20,7 +20,7 @@ function loginform(){
 
 <div id="spacerID"></div>
 
-<div id="msgID" style="display:<?php if($message=="NOT_SET"){echo("none");}else{echo("block");}?>">
+<div id="msgID" style="display:<?php if($message==" "){echo("none");}else{echo("block");}?>">
 <?php if(isset($message)){echo($message);}?>
 </div>
 
