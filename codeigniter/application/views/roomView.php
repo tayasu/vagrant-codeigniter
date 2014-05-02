@@ -220,7 +220,13 @@ else{
 <!------------------------------------------------------BOTTOM LINKS------------------------------------------------------------>    
 <br/>
 <div id="morePostID">
-<?php echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")' id='see_moreID'>see more..</a>");?>
+<?php 
+if　(isset($di2))　{
+	echo("<a href='javascript:ajaxPegination(" . ($di2 + 1) . ")' id='see_moreID'>see more..</a>");
+}else {
+	echo(" ");
+}
+?>
 </div>
 <br style="clear:both" />
 </div>
