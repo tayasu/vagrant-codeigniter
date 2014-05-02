@@ -24,7 +24,6 @@ class Room extends CI_Controller {
 
 	public function index(){
 		$posts = $this->showPosts("1");
-		
 		if($posts){                             //if result exists send the result to room for display
 			$this->load->view('roomView',$posts);
 		}

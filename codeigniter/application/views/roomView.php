@@ -159,7 +159,16 @@ function postStatusByAjax(){
 <body>
 
 <div id="roomMenuID">
-<?php echo($di0);?>
+<?php 
+if(isset($di0)){
+	echo($di0);
+}
+else{
+	$session_data = $this->session->userdata('logged_in');
+	echo($session_data['username']);
+}
+
+?>
 <a href="<?php echo(base_url());?>room/logout">Logout</a>
 </div>
 
@@ -186,6 +195,7 @@ function postStatusByAjax(){
 </div>	
 <!--------------------------------------------------DEFAULT STATUS DISPLAY---------------------------------------------------->
 <?php 
+if(isset($di1)){
 for($i = 3; $i < $di1; $i++){
 	echo("<br/><div id='statusDisplayID'>");
 	echo("<p class='usernameClass'>".
@@ -196,6 +206,10 @@ for($i = 3; $i < $di1; $i++){
 			."</h7></p>");
 	echo("<p>".${'di'.$i}['posts']."</p>");
 	echo("</div>");
+}
+}
+else{
+	echo("No posts entered!");
 }
 ?>
 <!---------------------------------------------------AJAX STATUS DISPLAY------------------------------------------------------->

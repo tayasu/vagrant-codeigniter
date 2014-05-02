@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 define('DEFAULT_STATUS',"express yourself");
-define('LENGTH',5);
+define('LENGTH',2);
 define('LOGIN_FAILED',"Username or password is incorrect.");
 define('USER_EXISTS',"This email has already been registered.");
 define('REGISTRATION_SUCCESSFUL',"You have been registered. Please login.");
