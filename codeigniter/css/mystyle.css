@@ -168,7 +168,7 @@ body{
 #registerFormID{
 	background:#F5F5F5;
 	width:300px;
-	height:300px;
+	height:360px;
 	position:relative;
     left:36%;
 	border:1px #E5E5E5 solid;
@@ -243,12 +243,34 @@ body{
 	font-weight:bold;
 }
 
+/* ----------------------------------------------REGISTER CONFIRM PASSWORD CSS------------------------------------------- */
+
+#confirmPasswordID{
+	position:absolute;
+	border:2px #B40313 solid;
+	left: 89px;
+	top: 238px;
+	width: 160px;
+	padding:5px 5px 5px 5px;
+}
+
+#labelConfirmPassID{
+	position:absolute;
+	left: 90px;
+	top: 210px;
+	padding:5px 5px 5px 5px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:smaller;
+	color:#B40313;
+	font-weight:bold;
+}
+
 /* ----------------------------------------------REGISTER LOGIN BUTTON CSS------------------------------------------- */
 
 #loginbuttonID a{
 	position:absolute;
 	left: 105px;
-	top: 218px;
+	top: 285px;
 	width: 50px;
 	height: 20px;
 	text-align:center;
@@ -272,7 +294,7 @@ body{
 #registerbuttonID a{
 	position:absolute;
 	left: 177px;
-	top: 217px;
+	top: 285px;
 	width: 50px;
 	height: 20px;
 	text-align:center;
@@ -296,7 +318,7 @@ body{
 #forgotpassID a{
 	position:absolute;
 	left: 119px;
-	top: 256px;
+	top: 320px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:smaller;
 	color:#B40313;

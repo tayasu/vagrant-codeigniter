@@ -23,21 +23,6 @@ class Users extends CI_Model {
 		}
 	}
 	
-	public function userExists($email){
-		$this->db->select('email');
-		$this->db->from('users');
-		$this->db->where('email',$email);
-		
-		$query = $this->db->get();
-		
-		if($query->num_rows == 1){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
 	public function register($username,$email,$password){
 		$this->db->set('username',$username);
 		$this->db->set('email',$email);

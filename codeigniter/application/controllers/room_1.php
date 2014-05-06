@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+session_start();
+
 class Room extends CI_Controller {
 	public function _remap($method, $args) {
 		if (method_exists($this, $method)){
@@ -18,12 +20,12 @@ class Room extends CI_Controller {
 			redirect('login','refresh');
 		}	
 	}	
-	
+
+
 	public function index(){
 		$posts = $this->showPosts("1");
 		if($posts){                             //if result exists send the result to room for display
-			$data['jsonObject'] = $posts;
-			$this->load->view('roomView',$data);
+			$this->load->view('roomView',$posts);
 		}
 		else{                                    
 			$data['message'] = "NO_POSTS_YET";
@@ -33,52 +35,64 @@ class Room extends CI_Controller {
 	
 	public function showPosts($parameter){
 		$page = (int) $parameter;  //type casting the parameter to integer will cause page to be 0 is it contains alphabets
+		$session_data = $this->session->userdata('logged_in');
 		
 		$this->load->model('posts');
-		$postsFromDB = $this->posts->getPosts($page);
+		$postsFormDB = $this->posts->getPosts($page);
 		
-		if ($postsFromDB) {
-			return json_encode($postsFromDB);
-		} else {
+		if($postsFormDB){
+			if(!isset($postsFormDB['message'])){
+				$postsFormDB['message'] = "NOT_SET";
+			}
+			$n = count($postsFormDB);
+			array_unshift($postsFormDB,$session_data['username'],$n + 2,$page);
+			//setting the data to be sent to the view
+			for($i = 0; $i < $n + 2; $i++){
+				$di = 'di'.$i;
+				$data[$di] = $postsFormDB[$i];
+			}
+			$data['message'] = $postsFormDB['message'];
+			return $data;
+		}
+		else{
 			return false;
 		}		
 	} 
 	
-	public function ajaxDisplay($param){
+	public function ajax($param){
 		$posts = $this->showPosts($param);
 		if($posts){
-			print_r($posts);                         //returns the JSON Object Array to ajax responseText
+			print_r($posts);                         //returns the array to ajax responseText
 		}
 		else{
-			echo("[{\"message\":\"OUT_OF_INDEX\"}]");
+			echo("NO!");
 		}
 	}
 	
 	public function ajaxPost(){
-		$session_data = $this->session->userdata('logged_in');
-		if(isset($_POST['status'])){
-			$userid = $session_data['userid'];
-		 	$username = $session_data['username'];
+		if(isset($_POST['username'])&&isset($_POST['status'])){
+		 	$username = $_POST['username'];
 			$posts = $_POST['status'];
-			$time_of_post = date("Y-m-d H:i:s");
+			$date = date("Y-m-d H:i:s");
 			
 			$this->load->model('posts');
-			$insertPost = $this->posts->post($userid,$username,$posts,$time_of_post);
-		} else {
-			echo("VARIABLES_NOT_SET_IN_AJAXPOST");
-		}
+			$insertPost = $this->posts->post($username,$posts,$date);
 		
-		if($insertPost){
-			echo($time_of_post);
+			if($insertPost){
+				echo($date);
+			}
+			else{
+				echo("false");
+			}
 		}
 		else{
-			echo("POST_NOT_INSERTED");
+			echo("VARIABLES_NOT_SET");
 		}
 	}
 	
 	public function logout(){
 		$this->session->unset_userdata('logged_in');
-		$this->session->sess_destroy();
+		session_destroy();
 		redirect('login', 'refresh');
 	}
 }

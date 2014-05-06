@@ -18,46 +18,23 @@ function registerform(){
 
 <div id="spacerID"></div>
 
-<div id="msgID" style="display:<?php if($message==" "){echo("none");}else{echo("block");}?>">
-<?php
-//load the form helper class
-$this->load->helper('form');
-
-if(isset($message) && $message != "VALIDATION_ERRORS"){
-	echo($message);
-}
-if(validation_errors()){
-	echo validation_errors();
-}
-?>
+<div id="msgID" style="display:<?php if(validation_errors() == ""){echo("none");}else{echo("block");}?>">
+<?php if(validation_errors()){echo validation_errors();}?>
 </div>
 
 <div id="spacerID"></div>
 
 <div id="registerFormID">
 <?php
-//open the form tab and set action to validate function of the login class
 echo form_open('register/verifyRegister',array('name' => 'registerForm')); 
-
-//set the label for the usename
 echo form_label('Username', 'usernameID',  array( 'id' => 'labelUserID'));
-
-//text input type for usename
-echo form_input(array('name'        => 'username','id'          => 'usernameID'));
-
-//set the label for the usename
+echo form_input(array('name'=> 'username','id' => 'usernameID','value'=>set_value('username')));
 echo form_label('Email', 'emailID',  array( 'id' => 'labelEmailID'));
-
-//text input type for usename
-echo form_input(array('name'        => 'email','id'          => 'emailID'));
-
-//set the label for the password
+echo form_input(array('name'=> 'email','id'=> 'emailID','value'=>set_value('email')));
 echo form_label('Password', 'passwordID',  array( 'id' => 'labelPassID'));
-
-//text input type for usename
-echo form_password(array('name'        => 'password','id'          => 'passwordID'));
-
-//close the form
+echo form_password(array('name'=> 'password','id'=> 'passwordID','value'=>set_value('password')));
+echo form_label('Confirm Password', 'confirmPasswordID',  array( 'id' => 'labelConfirmPassID'));
+echo form_password(array('name'=> 'confirmPassword','id'=> 'confirmPasswordID','value'=>set_value('confirmPassword')));
 echo form_close();
 ?>
 <div id="loginbuttonID"><a href="<?php echo(base_url());?>login">Login</a></div>

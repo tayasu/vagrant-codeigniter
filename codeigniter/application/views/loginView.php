@@ -28,25 +28,11 @@ function loginform(){
 
 <div id="loginFormID">
 <?php
-//load the form helper class
-$this->load->helper('form');
-
-//open the form tab and set action to validate function of the login class
-echo form_open('login/verifyLogin',array('name' => 'loginForm')); 
-
-//set the label for the email
+echo form_open('login/verifyLogin',array('name' => 'loginForm'));
 echo form_label('Email', 'loginemailID',  array( 'id' => 'loginlabelEmailID'));
-
-//text input type for usename
-echo form_input(array('name'        => 'email','id'          => 'loginemailID'));
-
-//set the label for the password
+echo form_input(array('name'=> 'email','id'=> 'loginemailID'));
 echo form_label('Password', 'loginpasswordID',  array( 'id' => 'loginlabelPassID'));
-
-//text input type for usename
-echo form_password(array('name'        => 'password','id'          => 'loginpasswordID'));
-
-//close the form
+echo form_password(array('name'=> 'password','id'=> 'loginpasswordID'));
 echo form_close();
 ?>
 <div id="loginloginbuttonID"><a href="javascript:loginform()">Login</a></div>

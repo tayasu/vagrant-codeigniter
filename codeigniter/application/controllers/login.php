@@ -22,8 +22,6 @@ class Login extends CI_Controller {
 	}
 	
 	private function verifyLogin(){
-		$this->load->helper('form');
-		$this->load->library('form_validation','url');
 		$this->form_validation->set_rules('username', 'Username', 'trim|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|xss_clean');
 
@@ -37,13 +35,12 @@ class Login extends CI_Controller {
 			$singleRowResult=$this->users->authenticate($email,$password); //the authenticate function is in model:users
 		}
 			
-		if($singleRowResult){                    //if user exists create session and redirect to room
+		if ($singleRowResult) {                    //if user exists create session and redirect to room
 			$sess_array = array();
 			$sess_array = array('userid' => $singleRowResult['userid'],'username' => $singleRowResult['username']);
 			$this->session->set_userdata('logged_in', $sess_array);
 			redirect('room','refresh');
-		}
-		else{                         // if user does not exist, redirect to login page with message
+		} else {                         // if user does not exist, redirect to login page with message
 			$data['message'] = LOGIN_FAILED;
 			$this->load->view('loginView',$data);
 		}
