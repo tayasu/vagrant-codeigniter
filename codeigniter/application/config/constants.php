@@ -1,5 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+define('DEFAULT_STATUS',"express yourself");
+define('LENGTH',2);
+define('LOGIN_FAILED',"Username or password is incorrect.");
+define('NO_MESSAGE'," ");
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
