@@ -45,18 +45,20 @@ $(document).ready(function(){
 			type: "POST",
 			dataType: "text",  
 			url: "<?php echo(base_url());?>room/ajaxDisplay/", 
-			data: {"page":$("#pageID").val(),"<?php echo($this->security->get_csrf_token_name()); ?>":"<?php echo($this->security->get_csrf_hash());?>"},
+			data: {"postid":$("#lastPostID").val(),"<?php echo($this->security->get_csrf_token_name()); ?>":"<?php echo($this->security->get_csrf_hash());?>"},
       
 			success: 
 				function (data, status) {
-					console.log(data);
 					var arrayOfPostAsJSONObject = JSON.parse(data);			//getting the responseText from the server
 					var numberOfPosts = arrayOfPostAsJSONObject.length;    
 					if(arrayOfPostAsJSONObject[0].message == "OUT_OF_INDEX"){
 						$("#morePostID").hide();
 					}else{
-						var page = parseInt($("#pageID").val()) + 1; 
-						$("#pageID").val(page);
+						var postid = arrayOfPostAsJSONObject[arrayOfPostAsJSONObject.length - 1].postid; 
+						//console.log(arrayOfPostAsJSONObject[1]);
+						//console.log(data.length);
+						console.log(postid);
+						$("#lastPostID").val(postid);
 						if(numberOfPosts < <?php echo(LENGTH);?>){                      			//if max view reached pegination link changes 
 							$("#morePostID").hide();
 						}
@@ -150,6 +152,7 @@ if(isset($message) && $message == "NO_POSTS_YET"){
 }
 else{
 	$data = json_decode($jsonObject);
+	$postid = $data[count($data)-1]->postid;
 	for($i = 0; $i < LENGTH; $i++){
 		if(isset($data[$i]->username)){
 			echo("<br/><div id='statusDisplayID'>");
@@ -169,7 +172,12 @@ else{
 <br/>
 <div id="morePostID">
 <?php echo("<a href='#' id='see_moreID'>see more..</a>");?>
-<input type="hidden" name="page" id="pageID" value="2"></input>
+<input type="hidden" name="page" id="lastPostID" value="
+<?php 
+if(isset($data)){
+	echo($postid);
+}
+?>"></input>
 </div>
 <br style="clear:both" />
 </div>

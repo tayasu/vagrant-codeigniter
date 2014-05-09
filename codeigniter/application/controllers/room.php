@@ -20,7 +20,7 @@ class Room extends CI_Controller {
 	}	
 	
 	public function index(){
-		$posts = $this->showPosts("1");
+		$posts = $this->showInitialPosts();
 		if($posts){                             //if result exists send the result to room for display
 			$data['jsonObject'] = $posts;
 			$this->load->view('roomView',$data);
@@ -31,11 +31,22 @@ class Room extends CI_Controller {
 		}
 	}
 	
+	public function showInitialPosts(){
+		$this->load->model('posts');
+		$postsFromDB = $this->posts->getInitialPosts();
+		
+		if ($postsFromDB) {
+			return json_encode($postsFromDB);
+		} else {
+			return false;
+		}		
+	} 
+	
 	public function showPosts($parameter){
-		$page = (int) $parameter;  //type casting the parameter to integer will cause page to be 0 is it contains alphabets
+		$postid = (int) $parameter;  //type casting the parameter to integer will cause page to be 0 is it contains alphabets
 		
 		$this->load->model('posts');
-		$postsFromDB = $this->posts->getPosts($page);
+		$postsFromDB = $this->posts->getPosts($postid);
 		
 		if ($postsFromDB) {
 			return json_encode($postsFromDB);
@@ -45,8 +56,8 @@ class Room extends CI_Controller {
 	} 
 	
 	public function ajaxDisplay(){
-		$page = $_POST['page'];
-		$posts = $this->showPosts($page);
+		$postid = $_POST['postid'];
+		$posts = $this->showPosts($postid);
 		if($posts){
 			print_r($posts);                         //returns the JSON Object Array to ajax responseText
 		}
