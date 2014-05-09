@@ -6,13 +6,16 @@
 	
 <link rel="stylesheet" type="text/css" href="<? echo base_url();?>/css/mystyle.css">
 
-	
-<script language="javascript">
-function loginform(){
-	loginForm.submit();
-}
-</script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+	$("#loginID").click(function(){
+		$("#loginFID").submit();
+	});
+});
+</script>	
 </head>
 <body>
 
@@ -28,14 +31,14 @@ function loginform(){
 
 <div id="loginFormID">
 <?php
-echo form_open('login/verifyLogin',array('name' => 'loginForm'));
+echo form_open('login/verifyLogin',array('name' => 'loginForm','id'=>'loginFID'));
 echo form_label('Email', 'loginemailID',  array( 'id' => 'loginlabelEmailID'));
 echo form_input(array('name'=> 'email','id'=> 'loginemailID'));
 echo form_label('Password', 'loginpasswordID',  array( 'id' => 'loginlabelPassID'));
 echo form_password(array('name'=> 'password','id'=> 'loginpasswordID'));
 echo form_close();
 ?>
-<div id="loginloginbuttonID"><a href="javascript:loginform()">Login</a></div>
+<div id="loginloginbuttonID"><a href="#" id="loginID">Login</a></div>
 <br/>
 <div id="loginregisterbuttonID"><a href="<?php echo(base_url());?>register">Register</a></div>
 <div id="loginforgotpassID"><a href="recover_pass.php">forgot password?</a></div>

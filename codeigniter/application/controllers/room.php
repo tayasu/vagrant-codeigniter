@@ -44,8 +44,9 @@ class Room extends CI_Controller {
 		}		
 	} 
 	
-	public function ajaxDisplay($param){
-		$posts = $this->showPosts($param);
+	public function ajaxDisplay(){
+		$page = $_POST['page'];
+		$posts = $this->showPosts($page);
 		if($posts){
 			print_r($posts);                         //returns the JSON Object Array to ajax responseText
 		}

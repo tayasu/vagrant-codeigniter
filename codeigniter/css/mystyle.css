@@ -493,7 +493,7 @@ textarea#textAreaID{
 	resize:none;
 	color:#666;
 	font-size:14px;
-	-moz-border-radius: 8px; -webkit-border-radius: 8px;
+	-moz-border-radius: 0px; -webkit-border-radius: 0px;
 	margin:5px 0px 10px 0px;
 	padding:10px;
 	height:70px;
