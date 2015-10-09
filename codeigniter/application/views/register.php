@@ -38,15 +38,26 @@
                       
             <div class="col-md-5">
 
+                <div class="text-danger"><?php echo form_error('name'); ?></div>
+
                 <div class="text-danger"><?php echo form_error('mail'); ?></div>
                 
                 <div class="text-danger"><?php echo form_error('password'); ?></div>
+
                 <?php echo $this->session->flashdata('error_msg'); ?>
                 <?php
-                    $atriibutes = array("class" => "form-horizontal");
+                    $attributes = array("class" => "form-horizontal");
                 ?> 
-                <?php echo form_open('twitter/login', $atriibutes); ?>
-                
+                <?php echo form_open('twitter/register', $attributes); ?>
+                  
+                    <div class="form-group">
+                        <label for="name" class="col-md-4">名前</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="manh">
+                        </div>                           
+                    </div>
+
                    <div class="form-group">
                         <label for="mail" class="col-md-4">メールアドレス</label>
                         <div class="col-md-6">
@@ -65,19 +76,12 @@
                        
                    <div class="form-group">
                       <div class="col-md-10">
-                         <button type="submit" class="btn btn-default" name="btn-login" value = "Login">ログイン</button>
+                         <button type="submit" class="btn btn-default" name="btn-register" value = "Register">登録</button>
                       </div>
                    </div>
 
 
-                   <div class="form-group">
-                      <div class="col-md-offset-2 col-md-10">                        
-                            <label>
-                               <h4><a href="http://vagrant-codeigniter.local/index.php/twitter/register">ユーザー登録こちらから</a></h4>
-                            </label>
-                      </div>
-                   </div>
-                <?php echo form_close(); ?>
+                  <?php echo form_close(); ?>
             </div>
         <!-- </div> -->
     </div>
