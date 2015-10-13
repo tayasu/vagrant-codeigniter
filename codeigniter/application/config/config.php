@@ -357,6 +357,7 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-
+$config['javascript_location'] = 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"';
+$config['javascript_ajax_img'] = 'images/ajax-loader.gif';
 /* End of file config.php */
 /* Location: ./application/config/config.php */

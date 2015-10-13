@@ -43,9 +43,9 @@
                 <div class="text-danger"><?php echo form_error('password'); ?></div>
                 <?php echo $this->session->flashdata('error_msg'); ?>
                 <?php
-                    $atriibutes = array("class" => "form-horizontal");
+                    $attributes = array("class" => "form-horizontal");
                 ?> 
-                <?php echo form_open('twitter/login', $atriibutes); ?>
+                <?php echo form_open('twitter/login', $attributes); ?>
                 
                    <div class="form-group">
                         <label for="mail" class="col-md-4">メールアドレス</label>

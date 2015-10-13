@@ -17,7 +17,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    
+
+    <script type="text/javascript">
+    	("#btn_tweet").click(function() {
+    		alert('clicked');
+    	});
+    </script>
     
 </head>
 
@@ -28,7 +33,8 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-             
+             	<li class="active"><a href="#"><?php echo ($name); ?></a></li>
+             	<li class="active>"><a href="#">ログアウト</a></li>
             </ul>
         </div>
     </nav>
@@ -37,47 +43,47 @@
         <!-- <div class="row"> -->
                       
             <div class="col-md-5">
-
-                <div class="text-danger"><?php echo form_error('mail'); ?></div>
-                
-                <div class="text-danger"><?php echo form_error('password'); ?></div>
-                <?php echo $this->session->flashdata('error_msg'); ?>
+                            
+                <div class="text-danger"><?php echo form_error('tweet'); ?></div>
                 <?php
-                    $atriibutes = array("class" => "form-horizontal");
+                    $attributes = array("class" => "form-horizontal");
                 ?> 
-                <?php echo form_open('twitter/login', $atriibutes); ?>
+                <?php echo form_open('twitter/homepage', $attributes); ?>
                 
                    <div class="form-group">
-                        <label for="mail" class="col-md-4">メールアドレス</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="mail" name="mail"
-                                placeholder="example@gmail.com">
-                        </div>                           
-                   </div>
-
-                   <div class="form-group">
-                      <label for="password" class="col-md-4">パスワード</label>
-                      <div class="col-md-6">
-                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="123456">
-                      </div>                    
+                        <label for="mail" class="col-md-4">ツイート</label>
+                        <textarea class="form-control" id="tweet" name="tweet"></textarea>
                    </div>
                        
                    <div class="form-group">
-                      <div class="col-md-10">
-                         <button type="submit" class="btn btn-default" name="btn-login" value = "Login">ログイン</button>
-                      </div>
+                      
+                         <button type="submit" class="btn btn-default" name="btn-tweet" value = "Tweet" id="btn_tweet">ツイート</button>
+                      
                    </div>
-
-
-                   <div class="form-group">
-                      <div class="col-md-offset-2 col-md-10">                        
-                            <label>
-                               <h4><a href="http://vagrant-codeigniter.local/index.php/twitter/register">ユーザー登録こちらから</a></h4>
-                            </label>
-                      </div>
-                   </div>
+                   
                 <?php echo form_close(); ?>
+
+                <div id="tweet_list"></div>
+                <script type="text/javascript">
+                //	<?php echo $btn_tweet; ?>
+                </script>
+
+                <?php foreach($tweets as $tweet): ?>
+	                <ul class="list-group">
+	                	<li class="list-group-item">	      					      						
+         					<span class="badge"><?php echo $tweet['time'] ?></span>
+	         				<?php echo $tweet['name']; ?>	         						      				
+	   					</li>
+	                	<li class="list-group-item">
+	                		<p class="list-group-item-text">
+	         					<?php echo $tweet['tweet']; ?>
+	      					</p>
+	                	</li>
+
+	                </ul>
+            	<?php endforeach; ?>
+            	
+            	<button type="submit" class="btn btn-default" name="btn-addtweet" value = "AddTweet" id="btn_addtweet">もっと見る</button>
             </div>
         <!-- </div> -->
     </div>

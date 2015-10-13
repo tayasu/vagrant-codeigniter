@@ -9,7 +9,13 @@
 		public function getUser($mail, $password) {
 			$sql = "select * from users where mail = '$mail' and password = '$password'";
 			$result = $this->db->query($sql)->result_array();
-			return $result;
+			return $result[0];
+		}
+
+		public function getUserName($id) {
+			$sql = "select * from users where userID = '$id'";
+			$result = $this->db->query($sql);
+			return $result[0]['name'];
 		}
 
 		public function setStatus($mail, $status) {
