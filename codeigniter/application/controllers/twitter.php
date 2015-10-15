@@ -3,54 +3,68 @@
 	class Twitter extends CI_CONTROLLER {
 
 		public function __construct() {
+			//コントローラーをコンストラクタする
 			parent::__construct();
-		}
 
-		public function login() {
-			$this->load->helper('form');
-			$this->load->helper('email');
-			$this->load->helper(array('form','url'));
 
 			$this->load->library('form_validation');
 			$this->load->library('session');
 			$this->load->library('encrypt');
+			$this->load->library('security');
+			$this->load->library('javascript');
+			$this->load->library('javascript/jquery', FALSE);
 
-			#form validation rules
+			//ヘルプをロードする
+			$this->load->helper(array('form','url', 'email', 'date'));
+		}
+
+		public function login() {
+
+			//ログインフォーム検証ルールを設定する
 			$this->form_validation->set_rules('mail', 'メールアドレス', 'trim|required');
 			$this->form_validation->set_rules('password', 'パスワード', 'trim|required|min_length[6]');
 
+			// フォームバリデーションをチェックする
 			if($this->form_validation->run() == FALSE) {
 				$this->load->view('login');
 			} else {
 				$this->load->library('input');
 				$mail = $this->input->post("mail");
 				$password = $this->input->post("password");
-				// $password = $this->encrypt->encode($password);
-
-				//mail validation
+				$password = $this->encrypt->encode($password);
+				
+				//メールバリデーションをチェックする
 				if(valid_email($mail)) {
 					$this->load->model("user_model");
+
+					// メールとパスワードを確認する
 					$result = $this->user_model->getUser($mail, $password);
 					
+
 					if($result != NULL) {
-					
+						// ユーザー定義のセッションデータを追加する
 						$sessiondata = array(
-							'username' => $result['name'],
-							'mail' => $mail,
-							'id' => $result['userID']
+								'username' => $result['name'],
+								'mail' => $mail,
+								'id' => $result['userID']
 							);
+
 						$this->session->set_userdata($sessiondata);
 						$this->user_model->setStatus($mail, 'ON');
-						// $this->load->view('mainpage');
+						
+						// ホームページに行く
 						redirect('twitter/homepage');
 
 					} else {
-						// $this->load->view('login');
+						// メールとかパスワードが違うエラーのメッセージ
 						$this->session->set_flashdata('error_msg', '<div class="text-danger">メールとかパスワードが間違います！</div>');
+
 						redirect('twitter/login');
 					}
 				} else {
+					// メールのフォーマットが違うエラーのメッセージ
 					$this->session->set_flashdata('error_msg', '<div class="text-danger">メールのフォーマットが間違います！</div>');
+
 					redirect('twitter/login');
 				}	
 			}		
@@ -58,19 +72,13 @@
 
 
 		public function register() {
-			// $this->load->helper('form');
-			// $this->load->helper('email');
-			$this->load->helper(array('form','url', 'email'));
-
-			$this->load->library('form_validation');
-			$this->load->library('session');
-			$this->load->library('encrypt');
-
-			#form validation rules
+			
+			//登録検証ルールを設定する
 			$this->form_validation->set_rules('name', '名前', 'trim|required');
 			$this->form_validation->set_rules('mail', 'メールアドレス', 'trim|required');
 			$this->form_validation->set_rules('password', 'パスワード', 'trim|required|min_length[6]');
 
+			// フォームバリデーションをチェックする
 			if($this->form_validation->run() == FALSE) {
 				$this->load->view('register');
 			} else {
@@ -80,86 +88,112 @@
 				$password = $this->input->post("password");
 				$password = $this->encrypt->encode($password);
 
-				//mail validation
+				//メールバリデーションをチェックする
 				if(valid_email($mail)) {
 					$this->load->model("user_model");
 					
 					$result = $this->user_model->insertUser($name, $mail, $password);
-					// redirect('twitter/homepage');
+
 					if($result) {
+						// ユーザー定義のセッションデータを追加する
 						$sessiondata = array(
 							'username' => $name,
-							'mail' => $mail
+							'mail' => $mail,
+							'id' => $result['userID']
 						);
 
+						// ホームページに行く
 						$this->session->set_userdata($sessiondata);
 						$this->user_model->setStatus($mail, 'ON');
+						
 						redirect('twitter/homepage');
 					} else {
+						// メールとかパスワードが違うエラーのメッセージ
 						$this->session->set_flashdata('error_msg', '<div class="text-danger">メールは存在しました！</div>');
-						// $this->load->view('register');
+
 						redirect('twitter/register');
 					}
 
 				} else {
+					// メールのフォーマットが違うエラーのメッセージ
 					$this->session->set_flashdata('error_msg', '<div class="text-danger">メールのフォーマットが間違います！</div>');
+
 					redirect('twitter/register');
-				}
-				
-				
+				}							
 			}
-
-
 		}
 
-		public function homepage() {
-			
-			$this->load->helper(array('form', 'url', 'email'));
+		// 新しい１０件ツイートを表示する
+		public function tweet($limit) {
+			$this->load->model('tweet_model');
 
-			$this->load->library('form_validation');
-			$this->load->library('session');
-			$this->load->library('javascript');
-			$this->load->library('javascript/jquery', FALSE);
+			$data['tweets'] = $this->tweet_model->getTweet($limit);
+			$this->load->view('tweet', $data);
+		}
+
+		// 新しいツイートを投稿する
+		public function post_tweet($tweet) {
+			$this->load->model('tweet_model');
+
+			// ツイートを投稿人の情報を取る
+			$name = $this->session->userdata('username');
+			$userID = $this->session->userdata('id');
+
+			// ツイートをデータベースに入れる
+			$tweet = str_replace("_", "&nbsp", $tweet);
+			$tweet = $this->security->xss_clean($tweet);
+			$tweet = str_replace(";", "", $tweet);
+
+			$this->tweet_model->insertTweet($userID, $name, $tweet);
+
+			// 新しいツイートを表示
+			$data['tweets'] = $this->tweet_model->getTweet(10);
+			$this->load->view('tweet', $data);
+		}
+
+
+		// ホームページを表示する
+		public function homepage() {			
 
 			$this->load->model("tweet_model");
 			$this->load->model("user_model");
 
-			// $this->load->library('javascript', array('js_library_driver	' => 'script', 'autoload' => FALSE));
-
 			$data['library_src'] = $this->jquery->script();
-    		// $data['btn_tweet'] = $this->jquery->_click('#btn_tweet', "$('#tweet_list').html('test')");
 			
-			
+			// セッションが設定かどかをチェック
+			// $name = $this->session->userdata('username');
+			$sessID = $this->session->userdata('session_id');
 
-			$name = $this->session->userdata('username');
-			$data['name'] = $name;
-			$userID = $this->session->userdata('id');
-			$data['tweets'] = $this->tweet_model->getTweet();
 
-			$this->form_validation->set_rules('tweet', 'ツイート', 'trim|required|max_lenght[140]');
-
-			
-
-			if($this->form_validation->run() == FALSE) {
-				$this->load->view('mainpage', $data);
-				
+			if($sessID == NULL) {
+				// まだ設定しない
+				redirect('twitter/login');
 			} else {
 
-				$this->load->library('input');
-				$tweet = $this->input->post("tweet");
-				// $data['btn_tweet'] = $this->jquery->_click('#btn_tweet', "$('#tweet_list').html('test')");
+				$data['name'] = $this->session->userdata('username');
+				$userID = $this->session->userdata('id');
+				$data['userID'] = $userID;
+				$data['tweets'] = $this->tweet_model->getTweet(10);
 
-				$this->tweet_model->insertTweet($userID, $name,  $tweet);
-				// $data['tweets'] = $this->tweet_model->getTweet();
+				$this->form_validation->set_rules('tweet', 'ツイート', 'trim|required|max_lenght[140]');
 
-				// $data['btn_tweet'] = $this->jquery->_click('#btn_tweet', "$('#tweet_list').html('test')");
-				// $this->load->view('mainpage', $data);
-
-				
+				if($this->form_validation->run() == FALSE) {
+					$this->load->view('mainpage',$data);
+				}
 			}
-			
-			
+					
+		}
 
+		// セッションを破棄する、ログアウトして、ログインを戻る
+		public function logout() {
+			$this->load->model("user_model");
+
+			$mail = $this->session->userdata('mail');
+			$this->user_model->setStatus($mail, 'OFF');
+
+			// セッションを破棄する
+			$this->session->sess_destroy();
+			redirect('twitter/login');
 		}
 
 	}

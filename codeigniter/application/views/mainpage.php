@@ -1,14 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Twitter</title>
 
@@ -19,9 +14,33 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-    	("#btn_tweet").click(function() {
-    		alert('clicked');
+
+    	function clearText() {
+    		document.getElementById("tweet_form").reset();
+		}
+
+    	$(document).ready(function(){
+			var limit = 10; 
+
+    		$('#btn_addtweet').click(function(event) {
+    			limit+=10;
+    			$('#tweet_list').load('tweet/' + String(limit));
+    		});
+
+    		$('#btn_tweet').click(function(event) {
+    			var tweet = $('#tweet').val();
+
+    			if((tweet.length == 0) || (tweet.length>140)) {
+    				$('#err_msg').html("ツイート欄は必須です。");
+    			} else {
+    				$('#err_msg').html("");
+    				tweet = tweet.replace(/ /g, "_");
+    				$('#tweet_list').load('post_tweet/' + tweet);
+    				clearText();
+    			}	
+    		});
     	});
+    	
     </script>
     
 </head>
@@ -34,59 +53,78 @@
         <div>
             <ul class="nav navbar-nav">
              	<li class="active"><a href="#"><?php echo ($name); ?></a></li>
-             	<li class="active>"><a href="#">ログアウト</a></li>
+             	<li><a href="<?php echo base_url(); ?>index.php/twitter/logout">ログアウト</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
-        <!-- <div class="row"> -->
                       
-            <div class="col-md-5">
-                            
-                <div class="text-danger"><?php echo form_error('tweet'); ?></div>
-                <?php
-                    $attributes = array("class" => "form-horizontal");
-                ?> 
-                <?php echo form_open('twitter/homepage', $attributes); ?>
-                
-                   <div class="form-group">
-                        <label for="mail" class="col-md-4">ツイート</label>
-                        <textarea class="form-control" id="tweet" name="tweet"></textarea>
-                   </div>
-                       
-                   <div class="form-group">
-                      
-                         <button type="submit" class="btn btn-default" name="btn-tweet" value = "Tweet" id="btn_tweet">ツイート</button>
-                      
-                   </div>
-                   
-                <?php echo form_close(); ?>
+        <div class="col-md-5">
+                        
+            <div class="text-danger" id="err_msg"></div>         
+            
+            <?php
+                $attributes = array("class" => "form-horizontal", "id" => "tweet_form");
+            ?> 
+            <?php echo form_open('twitter/homepage', $attributes); ?>
+            
+               <div class="form-group" id="tweet_field">
+                    <label for="mail" class="col-md-4">ツイート</label>
+                    <textarea class="form-control" id="tweet" name="tweet"></textarea>
+               </div>
+            
+            <?php echo form_close(); ?>
 
-                <div id="tweet_list"></div>
-                <script type="text/javascript">
-                //	<?php echo $btn_tweet; ?>
-                </script>
+            <button type="submit" class="btn btn-default" name="btn-tweet" id="btn_tweet">ツイート</button>          
+            <br></br>
 
+          	<div id="new_tweet"></div>
+
+            <div id="tweet_list">
                 <?php foreach($tweets as $tweet): ?>
-	                <ul class="list-group">
-	                	<li class="list-group-item">	      					      						
-         					<span class="badge"><?php echo $tweet['time'] ?></span>
-	         				<?php echo $tweet['name']; ?>	         						      				
-	   					</li>
-	                	<li class="list-group-item">
-	                		<p class="list-group-item-text">
-	         					<?php echo $tweet['tweet']; ?>
-	      					</p>
-	                	</li>
+                    <ul class="list-group">
+                    	<li class="list-group-item active">	      					      						
+         					<span class="badge">
+                                <?php 
 
-	                </ul>
+                                    $post_time = strtotime($tweet['time']);
+                                    
+                                    $diff = time() - $post_time;
+                                    $day = floor($diff/86400);
+                                    $hour = floor($diff/3600);
+                                    $min = floor($diff/60);
+
+                                    if($day > 0) {
+                                        echo $day."日前";
+                                    } else if($hour > 0) {                                        
+                                        echo $hour."時前";    
+                                    } else if($min > 0){
+                                        echo $min."分前";    
+                                    } else {
+                                        echo "たった今";
+                                    }
+                                     
+                                ?>
+                            </span>
+             				<?php echo $tweet['name']; ?>	         						      				
+       					</li>
+                    	<li class="list-group-item">
+                    		<p class="list-group-item-text">
+             					<?php echo $tweet['tweet']; ?>
+          					</p>
+                    	</li>
+                            
+                    </ul>
+                
             	<?php endforeach; ?>
-            	
-            	<button type="submit" class="btn btn-default" name="btn-addtweet" value = "AddTweet" id="btn_addtweet">もっと見る</button>
-            </div>
-        <!-- </div> -->
+        	</div>
+        	  
+        	<button type="submit" class="btn btn-default" name="btn-addtweet" id="btn_addtweet">もっと見る</button>
+        </div>
+
     </div>
+
 </body>
 
 </html>
