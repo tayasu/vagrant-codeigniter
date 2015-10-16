@@ -31,7 +31,7 @@
 				$this->load->library('input');
 				$mail = $this->input->post("mail");
 				$password = $this->input->post("password");
-				$password = $this->encrypt->encode($password);
+				// $password = $this->encrypt->encode($password);
 				
 				//メールバリデーションをチェックする
 				if(valid_email($mail)) {

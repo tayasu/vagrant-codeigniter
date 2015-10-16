@@ -4,15 +4,13 @@
 <head>
 
     <meta charset="utf-8">
-
+    
     <title>Twitter</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-          
+    <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
+    <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
+    
 </head>
 
 <body>
@@ -20,12 +18,11 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Twitter</a>
         </div>
-        
     </nav>
 
     <div class="container">
-        
-        <div class="col-md-5">
+                      
+        <div class="col-md-4">
 
             <div class="text-danger"><?php echo form_error('name'); ?></div>
             <div class="text-danger"><?php echo form_error('mail'); ?></div>
@@ -34,38 +31,55 @@
 
             <?php
                 $attributes = array("class" => "form-horizontal", "id" => "register_form");
+                echo form_open('twitter/register', $attributes);
+                
+                echo form_label('名前', 'name');
+                $data_name_input = array(
+                  'type' => 'text',
+                  'class' => 'form-control',
+                  'id' => 'name',
+                  'name' => 'name',
+                  'placeholder' => 'manh'
+                  );
+                echo form_input($data_name_input);
+                echo "<br>";
+
+                echo form_label('メールアドレス', 'mail');
+                $data_mail_input = array(
+                  'type' => 'text',
+                  'class' => 'form-control',
+                  'id' => 'mail',
+                  'name' => 'mail',
+                  'placeholder' => 'example@gmail.com'
+                  );
+                echo form_input($data_mail_input);
+                echo "<br>";
+
+                echo form_label('パスワード', 'password');
+                $data_form_password = array(
+                  'type' => 'password',
+                  'class' => 'form-control',
+                  'id' => 'password',
+                  'name' => 'password',
+                  'placeholder' => '123456'
+                  );
+                echo form_password($data_form_password);
             ?> 
-            <?php echo form_open('twitter/register', $attributes); ?>
-              
-                <div class="form-group">
-                    <label for="name" class="col-md-4">名前</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="manh">
-                    </div>                           
-                </div>
-
-               <div class="form-group">
-                    <label for="mail" class="col-md-4">メールアドレス</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="mail" name="mail" placeholder="example@gmail.com">
-                    </div>                           
-               </div>
-
-               <div class="form-group">
-                  <label for="password" class="col-md-4">パスワード</label>
-                  <div class="col-md-6">
-                     <input type="password" class="form-control" id="password" name="password" placeholder="123456">
-                  </div>                    
-               </div>
-                   
-               <div class="form-group">
-                  <div class="col-md-10">
-                     <button type="submit" class="btn btn-default" name="btn-register">登録</button>
-                  </div>
-               </div>
-
-              <?php echo form_close(); ?>
-
+              <div class="col-md-offset-4 col-md-9">
+                    <?php 
+                      $data_form_submit = array(
+                      'type' => 'submit',
+                      'name' => 'btn-register',
+                      'class' => 'btn btn-info',
+                      'value' => '登録',
+                      );
+                    echo "<br>";
+                    echo form_submit($data_form_submit);
+                    echo "<br>";
+                    ?>                    
+              </div>
+               
+            <?php echo form_close(); ?>
         </div>
         
     </div>
