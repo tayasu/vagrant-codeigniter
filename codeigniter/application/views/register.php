@@ -10,6 +10,14 @@
     <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+      body {
+        background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
+        background-size: auto auto;
+        background-repeat: no-repeat;
+      }
+    </style>
     
 </head>
 

@@ -15,7 +15,7 @@
 			$this->load->library('javascript/jquery', FALSE);
 
 			//ヘルプをロードする
-			$this->load->helper(array('form','url', 'email', 'date'));
+			$this->load->helper(array('form','url', 'email', 'date', 'html'));
 		}
 
 		public function login() {
@@ -30,7 +30,7 @@
 				$this->load->library('input');
 				$mail = $this->input->post("mail");
 				$password = $this->input->post("password");
-				$password = $this->encrypt->encode($password);
+				// $password = $this->encrypt->encode($password);
 
 				//メールバリデーションをチェックする
 				if(valid_email($mail)) {
