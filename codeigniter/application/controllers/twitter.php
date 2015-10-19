@@ -32,7 +32,7 @@
 				$mail = $this->input->post("mail");
 				$password = $this->input->post("password");
 				// $password = $this->encrypt->encode($password);
-				
+
 				//メールバリデーションをチェックする
 				if(valid_email($mail)) {
 					$this->load->model("user_model");
@@ -162,10 +162,10 @@
 			
 			// セッションが設定かどかをチェック
 			// $name = $this->session->userdata('username');
-			$sessID = $this->session->userdata('session_id');
+			$username = $this->session->userdata('username');
 
 
-			if($sessID == NULL) {
+			if($username == NULL) {
 				// まだ設定しない
 				redirect('twitter/login');
 			} else {

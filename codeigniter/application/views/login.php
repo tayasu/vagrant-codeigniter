@@ -11,9 +11,17 @@
     <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
 
+    <style type="text/css">
+    body {
+      background-image: url("<?php echo base_url(); ?>resources/images/background.jpg");
+    }
+    </style>
+
 </head>
 
 <body>
+
+  </div>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Twitter</a>
