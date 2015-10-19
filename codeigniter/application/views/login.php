@@ -7,15 +7,11 @@
     
     <title>Twitter</title>
     
-    <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url('resources/css/bootstrap.min.css'); ?>" rel="stylesheet">
     <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
 
-    <style type="text/css">
-    body {
-      background-image: url("<?php echo base_url(); ?>resources/images/background.jpg");
-    }
-    </style>
+    
 
 </head>
 
@@ -75,11 +71,12 @@
                
               <div class="col-md-offset-2 col-md-9">                        
                     <label>
-                       <h4><a href="<?php echo base_url(); ?>index.php/twitter/register">ユーザー登録こちらから</a></h4>
+                       <h4><?php echo anchor('twitter/register', 'ユーザー登録こちらから'); ?></h4>
                     </label>
               </div>
                
             <?php echo form_close(); ?>
+
         </div>
         
     </div>

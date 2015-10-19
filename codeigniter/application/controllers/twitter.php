@@ -19,7 +19,6 @@
 		}
 
 		public function login() {
-
 			//ログインフォーム検証ルールを設定する
 			$this->form_validation->set_rules('mail', 'メールアドレス', 'trim|required');
 			$this->form_validation->set_rules('password', 'パスワード', 'trim|required|min_length[6]');
@@ -31,7 +30,7 @@
 				$this->load->library('input');
 				$mail = $this->input->post("mail");
 				$password = $this->input->post("password");
-				// $password = $this->encrypt->encode($password);
+				$password = $this->encrypt->encode($password);
 
 				//メールバリデーションをチェックする
 				if(valid_email($mail)) {
@@ -194,6 +193,27 @@
 			// セッションを破棄する
 			$this->session->sess_destroy();
 			redirect('twitter/login');
+		}
+
+		public function test() {
+			$prefs = array (
+               'show_next_prev' => TRUE,
+               'next_prev_url' => 'http://vagrant-codeigniter.local/index.php/twitter/test'
+             );
+
+			$this->load->library('calendar', $prefs);
+
+			echo $this->calendar->generate($this->uri->segment(3), $this->uri->segment(4));
+
+			$this->load->library('table');
+
+			$this->table->set_heading('Name', 'Color', 'Size');
+
+			$this->table->add_row('Fred', 'Blue', 'Small');
+			$this->table->add_row('Mary', 'Red', 'Large');
+			$this->table->add_row('John', 'Green', 'Medium');
+
+			echo $this->table->generate();
 		}
 
 	}
