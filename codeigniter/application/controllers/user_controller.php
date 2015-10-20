@@ -1,9 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
-	/**
-	 * ユーザーコントローラー
-	 * 
-	 */
 	class User_controller extends CI_CONTROLLER 
 	{
 
