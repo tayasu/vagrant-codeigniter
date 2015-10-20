@@ -25,7 +25,7 @@
             document.getElementById("tweet_form").reset();
         }
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             var limit = 10; 
 
             $('#btn_addtweet').click(function(event) {
@@ -54,7 +54,7 @@
 <body>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Twitter</a>
+            <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/twitter/homepage">Twitter</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
@@ -70,6 +70,7 @@
                         
             <div class="text-danger" id="err_msg"></div>         
             <?php
+                echo br();
                 $attributes = array("class" => "form-horizontal", "id" => "tweet_form");
                 echo form_open('twitter/homepage', $attributes);
         
@@ -81,11 +82,13 @@
                   'placeholder' => '今どうしてる',
                   'rows' => 3,
                   'cols' => 20
-                  );
+                );
+
                 echo form_textarea($data_tweet_input);
                 echo "<br>";
                 echo form_close();
             ?>
+
             <div class="col-md-offset-4 col-md-9">
                 <?php    
                     $data_btn_tweet = array(
@@ -94,7 +97,7 @@
                         'name' => 'btn-tweet',
                         'id' => 'btn_tweet',
                         'content' => 'ツイート'
-                        );
+                    );
 
                     echo form_button($data_btn_tweet); 
                 ?>
@@ -110,7 +113,6 @@
                         <li class="list-group-item active">                                                     
                             <span class="badge">
                                 <?php 
-
                                     $post_time = strtotime($tweet['time']);
                                     
                                     $diff = time() - $post_time;
@@ -118,16 +120,22 @@
                                     $hour = floor($diff/3600);
                                     $min = floor($diff/60);
 
-                                    if($day > 0) {
+                                    if ($day > 0)
+                                    {
                                         echo $day."日前";
-                                    } else if($hour > 0) {                                        
+                                    } 
+                                    else if ($hour > 0) 
+                                    {                                        
                                         echo $hour."時前";    
-                                    } else if($min > 0){
+                                    } 
+                                    else if ($min > 0)
+                                    {
                                         echo $min."分前";    
-                                    } else {
+                                    } 
+                                    else
+                                    {
                                         echo "たった今";
-                                    }
-                                     
+                                    }     
                                 ?>
                             </span>
                             <?php echo $tweet['name']; ?>                                                       
@@ -151,7 +159,7 @@
                         'name' => 'btn-addtweet',
                         'id' => 'btn_addtweet',
                         'content' => 'もっと見る'
-                        );
+                    );
                     echo form_button($data_btn_addtweet);
                 ?>  
             </div>

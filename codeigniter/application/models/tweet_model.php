@@ -1,22 +1,35 @@
-<!-- ツイートのデータを処理するモデル -->
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-	class Tweet_model extends CI_MODEL {
+	class Tweet_model extends CI_MODEL 
+	{
 		
-		public function __construct() {
+		public function __construct() 
+		{
 			parent::__construct();
+
 			$this->load->database();		
 		}
 
 		// ツイートを呼び出す
-		public function getTweet($limit) {
-			$sql = "select * from tweet order by time desc limit $limit";
-			$result = $this->db->query($sql)->result_array();
+		public function get_tweet($limit) 
+		{	
+			$this->db->order_by('time', 'desc');
+			$result = $this->db->get('tweet', $limit)->result_array();
+
 			return $result;
 		}
+
 		// ツイートを入力する
-		public function insertTweet($userID, $name, $tweet) {
-			$sql = "insert into tweet values (NULL, '$userID', '$tweet', CURRENT_TIMESTAMP, '$name')";
-			$result = $this->db->query($sql);
+		public function insert_tweet($userID, $name, $tweet) 
+		{
+			$data = array(
+				'tweetID' => NULL,
+				'userID' => $userID,
+				'tweet' => $tweet,
+				'time' => date('Y-m-d H:i:s', now()),
+				'name' => $name
+			);			
+			$this->db->insert('tweet', $data);
 		}
+
 	}
 ?>

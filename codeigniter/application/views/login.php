@@ -7,16 +7,16 @@
     
     <title>Twitter</title>
     
-    <link href="<?php echo base_url('resources/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
     
     <style type="text/css">
-      body {
-        background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
-        background-size: auto auto;
-        background-repeat: repeat;
-      }
+        body {
+          background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
+          background-size: auto auto;
+          background-repeat: no-repeat;
+        }
     </style>
     
 
@@ -24,10 +24,9 @@
 
 <body>
 
-  </div>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Twitter</a>
+            <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/twitter/homepage">Twitter</a>
         </div>
     </nav>
 
@@ -49,9 +48,9 @@
                   'id' => 'mail',
                   'name' => 'mail',
                   'placeholder' => 'example@gmail.com'
-                  );
+                );
                 echo form_input($data_mail_input);
-                echo "<br>";
+                echo br();
                 echo form_label('パスワード', 'password');
                 $data_form_password = array(
                   'type' => 'password',
@@ -59,34 +58,36 @@
                   'id' => 'password',
                   'name' => 'password',
                   'placeholder' => '123456'
-                  );
+                );
                 echo form_password($data_form_password);
             ?> 
-              <div class="col-md-offset-4 col-md-9">                        
-                    <?php 
-                      $data_form_submit = array(
-                      'type' => 'submit',
-                      'name' => 'btn-login',
-                      'class' => 'btn btn-info',
-                      'value' => 'ログイン',
-                      );
-                    echo "<br>";
-                    echo form_submit($data_form_submit);                
-                    echo br(2);
-                    ?>                    
-              </div>
+
+            <div class="col-md-offset-4 col-md-9">                        
+              <?php 
+                $data_form_submit = array(
+                'type' => 'submit',
+                'name' => 'btn-login',
+                'class' => 'btn btn-info',
+                'value' => 'ログイン',
+              );
+              echo br();
+              echo form_submit($data_form_submit);                
+              echo br(2);
+              ?>                    
+            </div>
                
-              <div class="col-md-offset-2 col-md-9">                        
-                    <label>
-                       <h4><?php echo anchor('twitter/register', 'ユーザー登録こちらから'); ?></h4>
-                    </label>
-              </div>
+            <div class="col-md-offset-2 col-md-9">                      
+                <label>
+                    <h4><?php echo anchor('twitter/register', 'ユーザー登録こちらから'); ?></h4>
+                </label>
+            </div>
                
             <?php echo form_close(); ?>
 
         </div>
         
     </div>
+
 </body>
 
 </html>
