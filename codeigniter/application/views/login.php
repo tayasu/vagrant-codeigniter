@@ -13,9 +13,9 @@
     
     <style type="text/css">
         body {
-          background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
-          background-size: auto auto;
-          background-repeat: no-repeat;
+            background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
+            background-size: auto auto;
+            background-repeat: no-repeat;
         }
     </style>
     
@@ -43,21 +43,21 @@
                 echo form_open('twitter/login', $attributes);
                 echo form_label('メールアドレス', 'mail');
                 $data_mail_input = array(
-                  'type' => 'text',
-                  'class' => 'form-control',
-                  'id' => 'mail',
-                  'name' => 'mail',
-                  'placeholder' => 'example@gmail.com'
+                    'type' => 'text',
+                    'class' => 'form-control',
+                    'id' => 'mail',
+                    'name' => 'mail',
+                    'placeholder' => 'example@gmail.com'
                 );
                 echo form_input($data_mail_input);
                 echo br();
                 echo form_label('パスワード', 'password');
                 $data_form_password = array(
-                  'type' => 'password',
-                  'class' => 'form-control',
-                  'id' => 'password',
-                  'name' => 'password',
-                  'placeholder' => '123456'
+                    'type' => 'password',
+                    'class' => 'form-control',
+                    'id' => 'password',
+                    'name' => 'password',
+                    'placeholder' => '123456'
                 );
                 echo form_password($data_form_password);
             ?> 
@@ -65,10 +65,10 @@
             <div class="col-md-offset-4 col-md-9">                        
               <?php 
                 $data_form_submit = array(
-                'type' => 'submit',
-                'name' => 'btn-login',
-                'class' => 'btn btn-info',
-                'value' => 'ログイン',
+                  'type' => 'submit',
+                  'name' => 'btn-login',
+                  'class' => 'btn btn-info',
+                  'value' => 'ログイン',
               );
               echo br();
               echo form_submit($data_form_submit);                
