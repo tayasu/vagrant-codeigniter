@@ -7,13 +7,13 @@
 
     <title>Twitter</title>
     
-    <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
-    <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
-    <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
+    <link href="<?=base_url();?>resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="<?=base_url();?>resources/js/jquery.js"></script>
+    <script src="<?=base_url();?>resources/js/bootstrap.min.js"></script>
 
     <style type="text/css">
       body {
-          background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
+          background: url("<?=base_url();?>resources/images/green-bg.jpg");
           background-size: auto auto;
           background-repeat: repeat;
       }
@@ -35,13 +35,12 @@
 
             $('#btn_tweet').click(function(event) {
                 var tweet = $('#tweet').val();
-
+                tweet = encodeURIComponent(tweet);
                 if ((tweet.length == 0) || (tweet.length>140)) {
                     $('#err_msg').html("ツイート欄は必須です。");
                 } 
                 
                 $('#err_msg').html("");
-                tweet = tweet.replace(/ /g, "_");
                 $('#tweet_list').load('post/' + tweet);
                 clearText();
                    
@@ -55,12 +54,12 @@
 <body>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/twitter/homepage">Twitter</a>
+            <a class="navbar-brand" href="<?=base_url();?>index.php/twitter/homepage">Twitter</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#"><?php echo ($name); ?></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/twitter/logout">ログアウト</a></li>
+                <li class="active"><a href="#"><?=$name;?></a></li>
+                <li><a href="<?=base_url(); ?>index.php/twitter/logout">ログアウト</a></li>
             </ul>
         </div>
     </nav>

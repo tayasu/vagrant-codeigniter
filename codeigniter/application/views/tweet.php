@@ -1,7 +1,6 @@
 <!-- もっとツイートを表示する（AJAXを呼び出すのため） -->
 <?php foreach($tweets as $tweet): ?>
     <ul class="list-group">
-
         <li class="list-group-item active">                                                     
             <span class="badge">
                 <?php 
@@ -33,6 +32,5 @@
                 <?php echo $tweet['tweet']; ?>
             </p>
         </li>
-
     </ul>
 <?php endforeach; ?>

@@ -7,13 +7,13 @@
     
     <title>Twitter</title>
     
-    <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
-    <script src="<?php echo base_url(); ?>resources/js/jquery.js"></script>
-    <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
+    <link href="<?=base_url();?>resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="<?=base_url();?>resources/js/jquery.js"></script>
+    <script src="<?=base_url();?>resources/js/bootstrap.min.js"></script>
     
     <style type="text/css">
         body {
-            background: url("<?php echo base_url(); ?>resources/images/green-bg.jpg");
+            background: url("<?=base_url();?>resources/images/green-bg.jpg");
             background-size: auto auto;
             background-repeat: no-repeat;
         }
@@ -26,7 +26,7 @@
 
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/twitter/homepage">Twitter</a>
+            <a class="navbar-brand" href="<?=base_url();?>index.php/twitter/homepage">Twitter</a>
         </div>
     </nav>
 
@@ -34,9 +34,9 @@
                       
         <div class="col-md-4">
 
-            <div class="text-danger"><?php echo form_error('mail'); ?></div>
-            <div class="text-danger"><?php echo form_error('password'); ?></div>
-            <?php echo $this->session->flashdata('error_msg'); ?>
+            <div class="text-danger"><?=form_error('mail');?></div>
+            <div class="text-danger"><?=form_error('password');?></div>
+            <?=$this->session->flashdata('error_msg');?>
 
             <?php
                 $attributes = array("class" => "form-horizontal", "id" => "login_form");
@@ -78,11 +78,11 @@
                
             <div class="col-md-offset-2 col-md-9">                      
                 <label>
-                    <h4><?php echo anchor('twitter/register', 'ユーザー登録こちらから'); ?></h4>
+                    <h4><?=anchor('twitter/register', 'ユーザー登録こちらから');?></h4>
                 </label>
             </div>
-               
-            <?php echo form_close(); ?>
+            
+            <?=form_close();?>
 
         </div>
         

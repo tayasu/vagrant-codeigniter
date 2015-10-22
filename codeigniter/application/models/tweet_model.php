@@ -4,28 +4,43 @@
         public function __construct() {
             parent::__construct();
 
-            $this->load->database();        
+            $this->load->library('driver');
+
+            $this->load->driver('cache');
+
+            $this->load->database();
         }
 
         // ツイートを呼び出す
         public function get($limit) {
-            $this->db->order_by('time', 'desc');
-            $result = $this->db->get('tweet', $limit)->result_array();
 
+            $check_cache = $this->cache->memcached->get($limit);
+
+            if (! $check_cache) {
+                $this->db->order_by('tweet_id', 'desc');
+                $result = $this->db->get('tweet', $limit)->result_array();
+
+                $this->cache->memcached->save($limit, $result, 300);
+                return $result;
+            }
+
+            $result = $this->cache->memcached->get($limit);
             return $result;
         }
 
         // ツイートを入力する
-        public function insert($userID, $name, $tweet) {
+        public function insert($user_id, $name, $tweet) {
+
+            $this->cache->memcached->clean();
+
             $data = array(
-                'tweetID' => NULL,
-                'userID' => $userID,
+                'tweet_id' => NULL,
+                'user_id' => $user_id,
                 'tweet' => $tweet,
                 'time' => date('Y-m-d H:i:s', now()),
                 'name' => $name
             );          
             $this->db->insert('tweet', $data);
         }
-
     }
 ?>
