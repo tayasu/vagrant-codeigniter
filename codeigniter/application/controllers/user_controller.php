@@ -12,6 +12,9 @@
             $this->load->library('javascript');
             $this->load->library('javascript/jquery', FALSE);
             $this->load->library('input');
+            $this->load->library('driver');
+
+            $this->load->driver('cache');
 
             $this->load->model("user_model");
 
@@ -107,6 +110,8 @@
             $mail = $this->session->userdata('mail');
             $this->user_model->set_status($mail, 'OFF');
             $this->session->sess_destroy();
+            
+            $this->cache->memcached->clean();
 
             redirect('twitter/login');
         }
