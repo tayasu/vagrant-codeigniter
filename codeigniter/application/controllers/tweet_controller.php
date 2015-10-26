@@ -12,6 +12,9 @@
             $this->load->library('javascript');
             $this->load->library('javascript/jquery', FALSE);
 
+            $this->load->library('driver');
+            $this->load->driver('cache');
+
             $this->load->model('tweet_model');
             $this->load->model("user_model");
 
@@ -59,6 +62,13 @@
             if ($this->form_validation->run() === FALSE) {
                 $this->load->view('mainpage',$data);    
             }             
+        }
+
+        public function test() {
+            $m = new Memcached();
+            $this->cache->memcached->save('1', 'test');
+            $this->cache->memcached->save('2', 'test2');
+            var_dump($m->get('1'));
         }
     }
 ?>
