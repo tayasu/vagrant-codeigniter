@@ -3,7 +3,7 @@
         
         public function __construct() {
             parent::__construct();
-
+            $this->load->library('encrypt');
             $this->load->database();        
         }
 
@@ -20,7 +20,7 @@
 
             return NULL;       
         }
-        
+
         // メールの存在をチェック
         public function is_mail_unique($mail) {
 

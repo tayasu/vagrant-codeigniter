@@ -110,7 +110,6 @@
             $mail = $this->session->userdata('mail');
             $this->user_model->set_status($mail, 'OFF');
             $this->session->sess_destroy();
-            
             $this->cache->memcached->clean();
 
             redirect('twitter/login');

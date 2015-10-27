@@ -56,7 +56,6 @@
             $user_id = $this->session->userdata('id');
             $data['user_id'] = $user_id;
             $data['tweets'] = $this->tweet_model->get(TWEET_LIMIT);
-
             $this->form_validation->set_rules('tweet', 'ツイート', 'trim|required|max_lenght[140]|min_length[0]');
 
             if ($this->form_validation->run() === FALSE) {
