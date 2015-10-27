@@ -63,12 +63,5 @@
                 $this->load->view('mainpage',$data);    
             }             
         }
-
-        public function test() {
-            $m = new Memcached();
-            $this->cache->memcached->save('1', 'test');
-            $this->cache->memcached->save('2', 'test2');
-            var_dump($m->get('1'));
-        }
     }
 ?>

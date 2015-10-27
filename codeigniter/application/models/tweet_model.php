@@ -31,11 +31,11 @@
 
                     $new_keys_array = array();
                     for ($i = 0; $i < count($add_to_cache); $i++) {
-                        $this->cache->memcached->save($add_to_cache[$i]['tweet_id'], $add_to_cache[$i], 300);
+                        $this->cache->memcached->save($add_to_cache[$i]['tweet_id'], $add_to_cache[$i], CACHE_TIME_OUT);
                         $new_keys_array[$i] = $add_to_cache[$i]['tweet_id'];
                     }                    
                     $keys_array = array_merge($keys_array, $new_keys_array);
-                    $this->cache->memcached->save('keys_array', $keys_array, 300);
+                    $this->cache->memcached->save('keys_array', $keys_array, CACHE_TIME_OUT);
                     $result = array_merge($result, $add_to_cache);
 
                     return $result;
@@ -51,11 +51,11 @@
             $result = $this->db->get('tweet', $limit)->result_array();
             $i = 0;
             foreach ($result as $tweet) {
-                $this->cache->memcached->save($tweet['tweet_id'], $tweet, 300);
+                $this->cache->memcached->save($tweet['tweet_id'], $tweet, CACHE_TIME_OUT);
                 $keys_array[$i] = $tweet['tweet_id'];
                 $i++;
             }
-            $this->cache->memcached->save('keys_array', $keys_array, 300);
+            $this->cache->memcached->save('keys_array', $keys_array, CACHE_TIME_OUT);
             return $result;            
         }
 
@@ -75,8 +75,8 @@
             $add_to_cache = $this->db->get_where('tweet', array('time' => $time))->result_array();
             $keys_array = $this->cache->memcached->get('keys_array');
             $keys_array = array_merge(array($add_to_cache[0]['tweet_id']), $keys_array);
-            $this->cache->memcached->save('keys_array', $keys_array, 300);
-            $this->cache->memcached->save($add_to_cache[0]['tweet_id'], $add_to_cache[0], 300);            
+            $this->cache->memcached->save('keys_array', $keys_array, CACHE_TIME_OUT);
+            $this->cache->memcached->save($add_to_cache[0]['tweet_id'], $add_to_cache[0], CACHE_TIME_OUT);            
         }
     }
 ?>
