@@ -62,5 +62,10 @@
                 $this->load->view('mainpage',$data);    
             }             
         }
+
+        public function test() {
+            $this->cache->save('hogehoge', $data);
+            var_dump($this->cache->get('hogehoge'));
+        }
     }
 ?>
