@@ -19,7 +19,6 @@
         }
     </style>
     
-
 </head>
 
 <body>
@@ -62,7 +61,7 @@
                 echo form_password($data_form_password);
             ?> 
 
-            <div class="col-md-offset-4 col-md-9">                        
+            <div class="col-md-offset-4 col-md-9">
               <?php 
                 $data_form_submit = array(
                   'type' => 'submit',
@@ -71,12 +70,12 @@
                   'value' => 'ログイン',
               );
               echo br();
-              echo form_submit($data_form_submit);                
+              echo form_submit($data_form_submit);
               echo br(2);
-              ?>                    
+              ?>
             </div>
                
-            <div class="col-md-offset-2 col-md-9">                      
+            <div class="col-md-offset-2 col-md-9">
                 <label>
                     <h4><?=anchor('twitter/register', 'ユーザー登録こちらから');?></h4>
                 </label>

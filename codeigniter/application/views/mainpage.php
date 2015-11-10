@@ -83,7 +83,6 @@
                     'rows' => 3,
                     'cols' => 20
                 );
-
                 echo form_textarea($data_tweet_input);
                 echo "<br>";
                 echo form_close();
@@ -98,7 +97,6 @@
                         'id' => 'btn_tweet',
                         'content' => 'ツイート'
                     );
-
                     echo form_button($data_btn_tweet); 
                 ?>
             </div>
@@ -122,14 +120,11 @@
 
                                     if ($day > 0) {
                                         echo $day."日前";
-                                    } 
-                                    else if ($hour > 0) {                                        
+                                    } else if ($hour > 0) {                                        
                                         echo $hour."時前";    
-                                    } 
-                                    else if ($min > 0) {
+                                    } else if ($min > 0) {
                                         echo $min."分前";    
-                                    } 
-                                    else {
+                                    } else {
                                         echo "たった今";
                                     }     
                                 ?>

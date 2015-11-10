@@ -19,8 +19,6 @@
         }
     </style>
 
-
-
 </head>
 
 <body>
@@ -86,7 +84,7 @@
                     'name' => 'confirm_password',
                     'placeholder' => '123456'
                 );
-                echo form_password($data_form_confirm_password);               
+                echo form_password($data_form_confirm_password);
             ?> 
             
             <div class="col-md-offset-4 col-md-9">
@@ -101,7 +99,7 @@
                   echo br();
                   echo form_submit($data_form_submit);
                   echo br();
-                ?>                    
+                ?>
             </div>
                
             <?=form_close();?>
