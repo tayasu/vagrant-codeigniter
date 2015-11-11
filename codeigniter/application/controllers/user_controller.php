@@ -45,7 +45,7 @@ class User_controller extends CI_CONTROLLER
                 redirect('twitter/homepage');
             } 
                 
-            $this->session->set_flashdata('error_msg', '<div class="text-danger">メールとかパスワードが間違います！</div>');
+            $this->session->set_flashdata('error_msg', '<div class="text-danger">メールアドレスまたはパスワードが違います！</div>');
             redirect('twitter/login');
         }       
     }

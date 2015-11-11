@@ -45,7 +45,6 @@ $route['twitter/register'] = 'user_controller/register';
 $route['twitter/logout'] = 'user_controller/logout';
 $route['twitter/homepage'] = 'tweet_controller/homepage';
 $route['twitter/tweet/(:num)'] = 'tweet_controller/tweet/$1';
-$route['twitter/post/(:any)'] = 'tweet_controller/post/$1';
-
+$route['twitter/post'] = 'tweet_controller/post';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -34,16 +34,24 @@
             });
 
             $('#btn_tweet').click(function(event) {
+                event.preventDefault();
                 var tweet = $('#tweet').val();
-                tweet = encodeURIComponent(tweet);
                 if ((tweet.length == 0) || (tweet.length>140)) {
                     $('#err_msg').html("ツイート欄は必須です。");
-                } 
+                }
                 
-                $('#err_msg').html("");
-                $('#tweet_list').load('post/' + tweet);
+                $.ajax({
+                    url: "<?=base_url();?>index.php/tweet_controller/post",
+                    type: "POST",
+                    data: {
+                        "<?=$this->security->get_csrf_token_name()?>": "<?=$this->security->get_csrf_hash()?>",
+                        "tweet": tweet
+                    },
+                    success: function() {
+                        $('#tweet_list').load('tweet/' + String(limit));
+                    }
+                });
                 clearText();
-                   
             });
         });
         
@@ -73,7 +81,9 @@
                 echo br();
                 $attributes = array("class" => "form-horizontal", "id" => "tweet_form");
                 echo form_open('twitter/homepage', $attributes);
-        
+                ?>
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                <?php
                 $data_tweet_input = array(
                     'type' => 'text',
                     'class' => 'form-control',
@@ -85,7 +95,7 @@
                 );
                 echo form_textarea($data_tweet_input);
                 echo "<br>";
-                echo form_close();
+                
             ?>
 
             <div class="col-md-offset-4 col-md-9">
@@ -100,6 +110,7 @@
                     echo form_button($data_btn_tweet); 
                 ?>
             </div>
+            <?php echo form_close(); ?>
 
             <br></br><br></br>
             

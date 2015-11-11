@@ -13,7 +13,7 @@ class Tweet_model extends CI_MODEL
     }
 
     // ツイートを読み出す
-    public function get($limit)
+    public function get($user_id, $limit)
     {
         $result = array();
         $limit = (int) $limit;
@@ -30,6 +30,7 @@ class Tweet_model extends CI_MODEL
             if ($last_tweet_id !== NULL) {
                 $this->db->where('tweet_id <', $last_tweet_id);
             }
+            $this->db->where('user_id =', $user_id);
             $add_to_cache = $this->db->get('tweet', TWEET_LIMIT)->result_array();
             $this->cache->memcached->save($limit, $add_to_cache, CACHE_TIME_OUT);
             $result = array_merge($result, $add_to_cache);
@@ -44,6 +45,7 @@ class Tweet_model extends CI_MODEL
             $last_tweet_id = $result[$tweet_num - 1]['tweet_id'];
             $this->db->order_by('tweet_id', 'desc');
             $this->db->where('tweet_id <', $last_tweet_id);
+            $this->db->where('user_id =', $user_id);
             $add_to_cache = $this->db->get('tweet', TWEET_LIMIT)->result_array();
             $result = array_merge($result, $add_to_cache);
             $add_to_cache = array_merge($this->cache->memcached->get($limit), $add_to_cache);
@@ -80,7 +82,7 @@ class Tweet_model extends CI_MODEL
                     $key += TWEET_LIMIT;
                     continue;
                 }
-                $this->cache->memcached->save($key, array_merge($temp, $cache), CACHE_TIME_OUT);
+                $this->cache->memcached->save($key, array_merge(array($temp), $cache), CACHE_TIME_OUT);
                 break;
             }
             $this->cache->memcached->save($key, array($temp), CACHE_TIME_OUT);
