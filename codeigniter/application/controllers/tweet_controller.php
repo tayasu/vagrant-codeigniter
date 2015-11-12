@@ -20,18 +20,20 @@ class Tweet_controller extends CI_CONTROLLER
         $this->load->model("user_model");
 
         $this->load->helper(array('form','url', 'email', 'date', 'html'));
+        if (!$this->_is_login()) {
+            redirect('twitter/login');
+        }   
+    }
+
+    private function _is_login()
+    {
+        return $this->session->userdata('username');
     }
 
     // ツイート・リストをもっと表示する
     public function tweet($limit)
     {
-        $username = $this->session->userdata('username');
         $user_id = $this->session->userdata('id');
-
-        if ($username === FALSE) {
-            redirect('twitter/login');
-        }
-
         $data['tweets'] = $this->tweet_model->get($user_id, $limit);
         $this->load->view('tweet', $data);
     }
@@ -39,31 +41,21 @@ class Tweet_controller extends CI_CONTROLLER
     // 新しいツイートを投稿する
     public function post()
     {
-        $name = $this->session->userdata('username');
         $user_id = $this->session->userdata('id');
-
-        if ($username === FALSE) {
-            redirect('twitter/login');
-        }
 
         $tweet = $this->input->post('tweet');
         $tweet_length = strlen($tweet);
-        if (($tweet_length == 0) || ($tweet_length > 140)) {
+        if (($tweet_length === 0) || ($tweet_length > 140)) {
             return;
         }
 
-        $this->tweet_model->insert($user_id, $name, $tweet);
+        $this->tweet_model->insert($user_id, $tweet);
         $data['tweets'] = $this->tweet_model->get($user_id, TWEET_LIMIT);
     }
 
     public function homepage()
     {  
         $data['library_src'] = $this->jquery->script();            
-        $username = $this->session->userdata('username');
-
-        if ($username === FALSE) {
-            redirect('twitter/login');
-        } 
 
         $data['name'] = $this->session->userdata('username');
         $user_id = $this->session->userdata('id');
