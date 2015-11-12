@@ -27,7 +27,7 @@ class Tweet_model extends CI_MODEL
             $last_tweet_id = $last_tweets[count($last_tweets) - 1]['tweet_id'];
 
             $this->db->select('tweet.*, users.name');
-            $this->db->from('users');
+            $this->db->join('users', 'users.user_id = tweet.user_id');
             $this->db->order_by('tweet_id', 'desc');
             if ($last_tweet_id !== NULL) {
                 $this->db->where('tweet_id <', $last_tweet_id);
@@ -46,8 +46,7 @@ class Tweet_model extends CI_MODEL
         if ($tweet_num < $limit) {
             $last_tweet_id = $result[$tweet_num - 1]['tweet_id'];
             $this->db->select('tweet.*, users.name');
-            $this->db->select('users.name');
-            $this->db->from('users'); 
+            $this->db->join('users', 'users.user_id = tweet.user_id');
             $this->db->order_by('tweet_id', 'desc');
             $this->db->where('tweet_id <', $last_tweet_id);
             $this->db->where('tweet.user_id =', $user_id);
