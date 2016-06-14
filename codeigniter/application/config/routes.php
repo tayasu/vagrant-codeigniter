@@ -7,7 +7,7 @@
 |
 | Typically there is a one-to-one relationship between a URL string
 | and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
+| URL normally follow this pattern:	
 |
 |	example.com/class/method/id/
 |
@@ -40,7 +40,11 @@
 
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
-
-
+$route['twitter/login'] = 'user_controller/login';
+$route['twitter/register'] = 'user_controller/register';
+$route['twitter/logout'] = 'user_controller/logout';
+$route['twitter/homepage'] = 'tweet_controller/homepage';
+$route['twitter/tweet/(:num)'] = 'tweet_controller/tweet/$1';
+$route['twitter/post'] = 'tweet_controller/post';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
